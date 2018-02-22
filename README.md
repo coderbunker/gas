@@ -22,11 +22,11 @@ Each ScriptId can both act as an add-on and as a GET / POST endpoint
 
 Need the following File > Project Properties > User Properties set:
 
-* orgName: Coderbunker
-* naturalLanguageApiKey: (API key from Developers Console)
-* OAUTH_CLIENT_SECRET: (Client Secret from OAuth Developers console)
-* OAUTH_CLIENT_ID: (Client ID from OAuth Developers console)
-* targetFolderName: Coderbunker Freelancers Profiles
+* ```ORG_NAME```: Coderbunker
+* ```NATURAL_LANGUAGE_API_KEY```: (API key from Developers Console)
+* ```OAUTH_CLIENT_SECRET```: (Client Secret from OAuth Developers console)
+* ```OAUTH_CLIENT_ID```: (Client ID from OAuth Developers console)
+* ```TARGET_FOLDER_NAME```: Coderbunker Freelancers Profiles
 
 ## More information
 

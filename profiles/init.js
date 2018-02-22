@@ -2,7 +2,7 @@
  * @OnlyCurrentDoc
  */
 
-// if you have multiple users account, watch out for the generated URL as it contains a reference to user /u/1 
+// if you have multiple users account, watch out for the generated URL as it contains a reference to user /u/1
 // that you need to remove
 // https://stackoverflow.com/questions/47045209/google-drive-page-not-found-sorry-unable-to-open-the-file-at-this-time
 function doGet(e) {
@@ -12,8 +12,8 @@ function doGet(e) {
 }
 
 function onOpen() {
-  const orgName = PropertiesService.getScriptProperties().getProperty('orgName');
-  SlidesApp.getUi() 
+  const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
+  SlidesApp.getUi()
       .createMenu(orgName)
       .addItem('Authorize', 'showSidebar')
       .addItem('Logout', 'clearService')
@@ -29,13 +29,13 @@ function clearService(){
 }
 
 function getTargetFolderName() {
-  return PropertiesService.getScriptProperties().getProperty('targetFolderName');
+  return PropertiesService.getScriptProperties().getProperty('TARGET_FOLDER_NAME');
 }
 
 function showThumbnailsSidebar() {
   const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
-  const sortedMembers = members.sort(function(m1, m2) { 
-    return m1.fullname.localeCompare(m2.fullname); 
+  const sortedMembers = members.sort(function(m1, m2) {
+    return m1.fullname.localeCompare(m2.fullname);
   });
   const page = render(sortedMembers);
   SlidesApp.getUi().showSidebar(page);

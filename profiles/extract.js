@@ -17,14 +17,14 @@ function extractPropertiesFromLines(lines) {
       properties[m[1].toLowerCase()] = m[2];
     }
   }
-  
-  return properties; 
+
+  return properties;
 }
 
 function extractKeywords(input) {
-  const naturalLanguageApiKey = PropertiesService.getScriptProperties().getProperty('naturalLanguageApiKey');
+  const naturalLanguageApiKey = PropertiesService.getScriptProperties().getProperty('NATURAL_LANGUAGE_API_KEY');
   const apiEndpoint = "https://language.googleapis.com/v1/documents:analyzeEntities?key=" + naturalLanguageApiKey;
-  
+
   const docDetails = {
     language: 'en-us',
     type: 'PLAIN_TEXT',
