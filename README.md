@@ -18,7 +18,7 @@ One subfolder per ScriptId (set of source files).
 
 Each ScriptId can both act as an add-on and as a GET / POST endpoint
 
-## Installation
+## Configuration of profiles (Google Slides)
 
 Need the following File > Project Properties > User Properties set:
 
@@ -27,6 +27,12 @@ Need the following File > Project Properties > User Properties set:
 * ```OAUTH_CLIENT_SECRET```: (Client Secret from OAuth Developers console)
 * ```OAUTH_CLIENT_ID```: (Client ID from OAuth Developers console)
 * ```TARGET_FOLDER_NAME```: Coderbunker Freelancers Profiles
+
+## Configuration of timesheet (Google Spreadsheet)
+
+* ```ORG_NAME```: Coderbunker
+* ```CHANGE_ENDPOINT```: onEdit events endpoint
+* ```SNAPSHOT_ENDPOINT```: full data snapshot data post endpoint
 
 ## More information
 
