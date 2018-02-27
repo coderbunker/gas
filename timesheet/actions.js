@@ -1,14 +1,14 @@
-function snapshot(spreadsheet) {
-  const exported = export(SpreadsheetApp.getActiveSpreadsheet());
-  const spreadsheetId = SpreadsheetApp.getActiveSpreadsheet().getId();
-  const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT') + '/' + spreadsheetId;
-  const response = postData(snapshotEndpoint, exported);
+function snapshot() {
+  const spreadsheet = getActiveSpreadsheet();
+  const exported = export(spreadsheet);
+  const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+  const response = postData(spreadsheet, snapshotEndpoint, exported);
   Logger.log(response);
 }
 
 function change(e) {
-  const spreadsheetId = SpreadsheetApp.getActiveSpreadsheet().getId();
-  const endpoint = PropertiesService.getScriptProperties().getProperty('CHANGE_ENDPOINT') + '/' + spreadsheetId;
-  const response = postData(endpoint, e);
+  const spreadsheet = getActiveSpreadsheet()
+  const changeEndpoint = PropertiesService.getScriptProperties().getProperty('CHANGE_ENDPOINT');
+  const response = postData(spreadsheet, changeEndpoint, e);
   Logger.log(response);
 }

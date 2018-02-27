@@ -1,5 +1,13 @@
+function getActiveSpreadsheet() {
+  var current = SpreadsheetApp.getActiveSpreadsheet();
+  if(!current) {
+    current = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty('DEFAULT_SPREADSHEET_URL'))
+  }
+  return current;
+}
+
 function doGet() {
-  const exported = export(SpreadsheetApp.getActiveSpreadsheet());
+  const exported = export(getActiveSpreadsheet());
   return ContentService
     .createTextOutput(JSON.stringify(exported, 4, null))
     .setMimeType(ContentService.MimeType.JSON);

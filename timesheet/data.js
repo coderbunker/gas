@@ -1,6 +1,8 @@
 function export(spreadsheet) {
   const sheet = spreadsheet.getSheetByName('Timesheet');
-  const timesheet = sheet.getSheetValues(1, 1, -1, -1);
+  //const timesheet = sheet.getSheetValues(1, 1, -1, -1).getDisplayValues();
+  //https://developers.google.com/apps-script/reference/spreadsheet/sheet
+  const timesheet = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
   const mapping = {
     'month': 0,
     'date': 1,
