@@ -1,3 +1,8 @@
+/**
+ * Return either the current spreadsheet or the globally configured spreadsheet
+ *
+ * @return {Spreadsheet} the result of the exponential calculation
+ */
 function getActiveSpreadsheet() {
   var current = SpreadsheetApp.getActiveSpreadsheet();
   if(!current) {
@@ -20,8 +25,22 @@ function onEdit(e) {
 
 function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
-  SpreadsheetApp.getUi()
-      .createMenu(orgName)
-      .addItem('Snapshot', 'snapshot')
-      .addToUi();
+  const menu = SpreadsheetApp.getUi().createMenu(orgName)
+  if(getActiveSpreadsheet().getSheetByName('Accounts')) {
+    menu.addItem('Snapshot All', 'snapshotAllTrigger')
+  }
+  if(getActiveSpreadsheet().getSheetByName('Timesheet')) {
+    menu.addItem('Snapshot Timesheet', 'snapshotTrigger')
+  }
+  menu.addToUi();
+}
+
+function snapshotTrigger() {
+  const spreadsheet = getActiveSpreadsheet();
+  snapshot(spreadsheet);
+}
+
+function snapshotAllTrigger() {
+  const spreadsheet = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty('DEFAULT_ACCOUNTS_URL'));
+  snapshotAll(spreadsheet);
 }
