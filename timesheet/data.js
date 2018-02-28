@@ -9,7 +9,7 @@ function export(spreadsheet) {
 }
 
 function normalizeName(name) {
-  return name.toLowerCase().split(' ').join('_');
+  return name.toLowerCase().split(' ').join('');
 }
 
 function getHeaderMapping(sheet) {
