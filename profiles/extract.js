@@ -39,7 +39,6 @@ function extractKeywords(input) {
     contentType: 'application/json',
     payload : JSON.stringify(nlData)
   };
-
   const response = UrlFetchApp.fetch(apiEndpoint, nlOptions);
   const data = JSON.parse(response);
   const keywords = data.entities
