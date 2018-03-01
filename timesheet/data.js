@@ -1,11 +1,31 @@
 function export(spreadsheet) {
-  const sheet = spreadsheet.getSheetByName('Timesheet');
-  //const timesheet = sheet.getSheetValues(1, 1, -1, -1).getDisplayValues();
-  //https://developers.google.com/apps-script/reference/spreadsheet/sheet
-  const timesheet = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
+  const timesheet = spreadsheet.getSheetByName('Timesheet');
+  const balance = spreadsheet.getSheetByName('Balance');
+  const id = spreadsheet.getId();
+  const name = spreadsheet.getName();
+  const timezone = spreadsheet.getSpreadsheetTimeZone();
+
+  return {
+    id: id,
+    name: name,
+    timezone: timezone,
+    apptype: 'Spreadsheet',
+    category: 'Timesheet',
+    sheets: {
+      Timesheet: {
+        data: exportSheet(spreadsheet, timesheet)
+      },
+      Balance: {
+        data: exportSheet(spreadsheet, balance)
+      }
+    }
+  };
+}
+
+function exportSheet(spreadsheet, sheet) {
+  const data = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
   const mapping = getHeaderMapping(sheet);
-  
-  return convertToEntries(timesheet, mapping)
+  return convertToEntries(data, mapping)
 }
 
 function normalizeName(name) {
