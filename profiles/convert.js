@@ -76,6 +76,10 @@ function convertSlidesFromPresentation(presentation) {
       properties.keywords = properties.keywords.split(',')
     }
     
+    if(properties.altnames) {
+      properties.altnames = properties.altnames.split(',');
+    }
+    
     // needs to find the right url to get to the presentation
     properties.slideUrl = presentation.getUrl() + '/edit#slide=' + slide.getObjectId();
 
