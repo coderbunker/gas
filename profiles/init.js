@@ -19,6 +19,7 @@ function onOpen() {
       .addItem('Logout', 'clearService')
       .addItem('Convert slides', 'convertSlides')
       .addItem('Show thumbnails', 'showThumbnailsSidebar')
+      .addItem('Snapshot', 'snapshot')
       .addToUi();
 }
 
@@ -39,4 +40,11 @@ function showThumbnailsSidebar() {
   });
   const page = render(sortedMembers);
   SlidesApp.getUi().showSidebar(page);
+}
+
+function snapshot() {
+  const exported = export(SlidesApp.getActivePresentation())
+  const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+  const output = postData(SlidesApp.getActivePresentation().getId(), exported, endpoint);
+  Logger.log(output);
 }

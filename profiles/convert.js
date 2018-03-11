@@ -50,6 +50,22 @@ function retrieveStoreKeywords(slide) {
   return keywords;
 }
 
+function retrieveStoreKeywordsProperties(slide, key) {
+  var keywords = null;
+  try {
+    var keywords = JSON.parse(PropertiesService.getDocumentProperties().getProperty(key));
+  } catch(e) {
+    // keep going
+  }
+  if(!keywords) {
+    const words = getWordsFromSlide(slide);
+    keywords = extractKeywords(words);
+    PropertiesService.getDocumentProperties().setProperty(key, JSON.stringify(keywords));
+  }
+
+  return keywords;
+}
+
 function convertSlidesFromPresentation(presentation) {
   const presentationFile = DriveApp.getFileById(presentation.getId());
   const thumbnailsFolder = createThumbnailsFolder(presentationFile, getTargetFolderName());
@@ -61,19 +77,17 @@ function convertSlidesFromPresentation(presentation) {
   for(slideId in slides) {
     var slide = slides[slideId];
     var properties = getPropertiesFromNotes(slide);
-
     Logger.log('Properties from notes are: ' + JSON.stringify(properties));
     if(!properties || !(properties.fullname)) {
       Logger.log('No valid fullname found, skipping');
       continue;
     }
 
-    if(!properties.keywords) {
-      Logger.log('creating keywords for ' + slideId);
-      properties.keywords = retrieveStoreKeywords(slide);
-    } else {
-      Logger.log('using cached keywords for ' + slideId);
-      properties.keywords = properties.keywords.split(',')
+    properties.keywords = retrieveStoreKeywordsProperties(slide, 'keywords ' + properties.fullname); 
+    slide.getNotesPage().getSpeakerNotesShape().getText().replaceAllText("^Keywords:.*$", "");
+    
+    if(properties.altnames) {
+      properties.altnames = properties.altnames.split(',');
     }
     
     // needs to find the right url to get to the presentation
