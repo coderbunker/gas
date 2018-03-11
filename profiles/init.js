@@ -45,5 +45,6 @@ function showThumbnailsSidebar() {
 function snapshot() {
   const exported = export(SlidesApp.getActivePresentation())
   const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
-  postData(SlidesApp.getActivePresentation().getId(), exported, endpoint);
+  const output = postData(SlidesApp.getActivePresentation().getId(), exported, endpoint);
+  Logger.log(output);
 }
