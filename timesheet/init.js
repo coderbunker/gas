@@ -1,7 +1,7 @@
 /**
  * Return either the current spreadsheet or the globally configured spreadsheet
  *
- * @return {Spreadsheet} the result of the exponential calculation
+ * @return {Spreadsheet} the result
  */
 function getActiveSpreadsheet() {
   var current = SpreadsheetApp.getActiveSpreadsheet();
