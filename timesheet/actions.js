@@ -1,5 +1,5 @@
-function snapshot(spreadsheet) {
-  const exported = export(spreadsheet);
+function snapshot(spreadsheet, sheetNames, category) {
+  const exported = export(spreadsheet, sheetNames, category);
   const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
   const response = postData(spreadsheet.getId(), exported, snapshotEndpoint);
   Logger.log(response);
@@ -21,7 +21,7 @@ function snapshotAll(spreadsheet) {
     }
     const timesheet = SpreadsheetApp.openByUrl(entry.timesheet);
     try {
-      return snapshot(timesheet);
+      return snapshot(timesheet, ['Timesheet', 'Balance'], 'Timesheet');
     } catch(e) {
        var errorSheet = spreadsheet.getSheetByName('Errors');
        lastRow = errorSheet.getLastRow();

@@ -1,25 +1,23 @@
-function export(spreadsheet) {
-  const timesheet = spreadsheet.getSheetByName('Timesheet');
-  const balance = spreadsheet.getSheetByName('Balance');
+function export(spreadsheet, sheetNames, category) {
   const id = spreadsheet.getId();
   const name = spreadsheet.getName();
   const timezone = spreadsheet.getSpreadsheetTimeZone();
-
-  return {
+  
+  const obj = {
     id: id,
     name: name,
     timezone: timezone,
     apptype: 'Spreadsheet',
-    category: 'Timesheet',
-    sheets: {
-      Timesheet: {
-        data: exportSheet(spreadsheet, timesheet)
-      },
-      Balance: {
-        data: exportSheet(spreadsheet, balance)
-      }
-    }
+    category: category,
+    sheets: { }
   };
+  
+  sheetNames.forEach(function(name) {
+    var sheet = spreadsheet.getSheetByName(name);
+    obj['sheets'][name] = { data: exportSheet(spreadsheet, sheet) }
+  });
+  
+  return obj;
 }
 
 function exportSheet(spreadsheet, sheet) {
@@ -47,9 +45,6 @@ function convertToEntries(data, mapping) {
   const entries = [];
   for(row in data) {
     var entry = convert(data[row], mapping);
-//    if(entry.resource.length == 0) {
-//      continue;
-//    }
     Logger.log(entry);
     entries.push(entry);
   }
@@ -59,7 +54,7 @@ function convertToEntries(data, mapping) {
 function convert(row, mapping) {
   const row_dict = {}
   Object.keys(mapping).map(function(k) { 
-    row_dict[k] = row[mapping[k]]; 
+    row_dict[k] = row[mapping[k]].trim(); 
   });
   return row_dict;
 }

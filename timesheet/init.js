@@ -22,7 +22,8 @@ function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
   const menu = SpreadsheetApp.getUi().createMenu(orgName)
   if(getActiveSpreadsheet().getSheetByName('Accounts')) {
-    menu.addItem('Snapshot All', 'snapshotAllTrigger')
+    menu.addItem('Snapshot All Timesheets', 'snapshotAllTrigger')
+    menu.addItem('Snapshot Accounts', 'snapshotAccountsTrigger')
   }
   if(getActiveSpreadsheet().getSheetByName('Timesheet')) {
     menu.addItem('Snapshot Timesheet', 'snapshotTrigger')
@@ -38,6 +39,11 @@ function snapshotTrigger() {
 function snapshotAllTrigger() {
   const spreadsheet = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty('DEFAULT_ACCOUNTS_URL'));
   snapshotAll(spreadsheet);
+}
+
+function snapshotAccountsTrigger() {
+  const spreadsheet = SpreadsheetApp.openByUrl(PropertiesService.getScriptProperties().getProperty('DEFAULT_ACCOUNTS_URL'));
+  snapshot(spreadsheet, ['Accounts'], 'Leads & Opportunities')
 }
 
 // TODO: doesn't trigger?
