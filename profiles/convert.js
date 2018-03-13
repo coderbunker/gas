@@ -53,14 +53,17 @@ function retrieveStoreKeywords(slide) {
 function retrieveStoreKeywordsProperties(slide, key) {
   var keywords = null;
   try {
-    var keywords = JSON.parse(PropertiesService.getDocumentProperties().getProperty(key));
+    keywords = JSON.parse(PropertiesService.getDocumentProperties().getProperty(key));
   } catch(e) {
     // keep going
+    Logger.log('failed to parse keywords for ' + key);
   }
   if(!keywords) {
     const words = getWordsFromSlide(slide);
     keywords = extractKeywords(words);
     PropertiesService.getDocumentProperties().setProperty(key, JSON.stringify(keywords));
+  } else {
+    Logger.log('already have keywords for ' + key);
   }
 
   return keywords;
