@@ -1,48 +1,3 @@
-function createThumbnailsFolder(presentationFile, name) {
-  const presentationFolder = presentationFile.getParents().next();
-  const thumbnailsFolders = presentationFolder.getFoldersByName(name);
-  var thumbnailsFolder;
-  if(thumbnailsFolders.hasNext()) {
-    Logger.log('Folder already exist, reusing');
-    thumbnailsFolder = thumbnailsFolders.next();
-  } else {
-    Logger.log('Thumbnails folder does not exist in folder, creating in: ' + presentationFolder.getName());
-    thumbnailsFolder = DriveApp.createFolder(name);
-    presentationFolder.addFolder(thumbnailsFolder);
-  }
-  return thumbnailsFolder;
-}
-
-function convertSlides() {
-  const presentation = SlidesApp.getActivePresentation();
-  const members = convertSlidesFromPresentation(presentation);
-  const page = render(members);
-
-  SlidesApp.getUi().showSidebar(page);
-}
-
-function createThumbnail(presentation, slide) {
-  var objectId = slide.getObjectId();
-  Logger.log('Selection is a page with ID: ' + slide.getObjectId());
-  var url = Utilities.formatString(
-    "https://slides.googleapis.com/v1/presentations/%s/pages/%s/thumbnail", 
-    presentation.getId(), objectId);
-  Logger.log('Thumbnail URL ' + url);
-  contentUrl = makeRequest(url);
-  Logger.log(contentUrl);
-  return contentUrl;
-}
-
-function allFiles(thumbnailsFolder) {
-  const thumbnailsFolderFiles = thumbnailsFolder.getFiles();
-  const existingFiles = {}
-  while(thumbnailsFolderFiles.hasNext()) {
-    var nextFile = thumbnailsFolderFiles.next();
-    existingFiles[nextFile.getName()] = nextFile;
-  }
-  return existingFiles;
-}
-
 function retrieveStoreKeywords(slide) {
   const words = getWordsFromSlide(slide);
   const keywords = extractKeywords(words);
@@ -93,9 +48,9 @@ function convertSlidesFromPresentation(presentation) {
       properties.altnames = properties.altnames.split(',');
     }
     
-    // needs to find the right url to get to the presentation
-    properties.slideUrl = presentation.getUrl() + '/edit#slide=' + slide.getObjectId();
-
+    properties.slideUrl = 'https://docs.google.com/presentation/d/' + presentation.getId() + '/edit#slide=id.' + slide.getObjectId();
+    properties.objectId = slide.getObjectId();
+    
     var filename = properties.fullname + '.png';
     Logger.log('Creating ' + filename);
     
