@@ -24,17 +24,31 @@ function retrieveStoreKeywordsProperties(slide, key) {
   return keywords;
 }
 
-function convertSlidesFromPresentation(presentation) {
+function getPresentationLastUpdated(presentation) {
   const presentationFile = DriveApp.getFileById(presentation.getId());
-  const thumbnailsFolder = createThumbnailsFolder(presentationFile, getTargetFolderName());
+  return presentationFile.getLastUpdated();
+}
+
+function getPresentationFolder(presentation) {
+  const presentationFile = DriveApp.getFileById(presentation.getId());
+  return presentationFile.getParents().next();
+}
+
+
+function convertSlidesFromPresentation(presentation) {
+  const presentationLastUpdated = getPresentationLastUpdated(presentation);
+  const presentationFolder = getPresentationFolder(presentation);
+  const presentationId = presentation.getId();
+  const thumbnailsFolder = createThumbnailsFolder(presentationFolder, getTargetFolderName());
   const slides = presentation.getSlides();
-  const existingFiles = allFiles(thumbnailsFolder);
   const members = [];
-  
+  const existingFiles = allFiles(thumbnailsFolder);
+
   Logger.log('Iterating through slides');
   for(slideId in slides) {
     var slide = slides[slideId];
     var properties = getPropertiesFromNotes(slide);
+    var slideObjectId = slide.getObjectId();
     Logger.log('Properties from notes are: ' + JSON.stringify(properties));
     if(!properties || !(properties.fullname)) {
       Logger.log('No valid fullname found, skipping');
@@ -42,38 +56,54 @@ function convertSlidesFromPresentation(presentation) {
     }
 
     properties.keywords = retrieveStoreKeywordsProperties(slide, 'keywords ' + properties.fullname); 
-    slide.getNotesPage().getSpeakerNotesShape().getText().replaceAllText("^Keywords:.*$", "");
     
     if(properties.altnames) {
       properties.altnames = properties.altnames.split(',');
     }
     
-    properties.slideUrl = 'https://docs.google.com/presentation/d/' + presentation.getId() + '/edit#slide=id.' + slide.getObjectId();
+    properties.slideUrl = 'https://docs.google.com/presentation/d/' + presentationId + '/edit#slide=id.' + slide.getObjectId();
     properties.objectId = slide.getObjectId();
-    
     var filename = properties.fullname + '.png';
-    Logger.log('Creating ' + filename);
-    
     var file;
-    if(!existingFiles[filename]) {
-      Logger.log('Creating: ' + filename);
-      var contentUrl = createThumbnail(presentation, slide);
-      var blob = UrlFetchApp.fetch(contentUrl).getBlob();
-      file = DriveApp.createFile(blob);
-      
+    var mustUpdate = checkUpdate(existingFiles, filename, presentationLastUpdated);
+    if(mustUpdate) {
+      file = createCopyThumbnail(presentationId, slideObjectId, filename);
       thumbnailsFolder.addFile(file);
-      file.setName(filename);
     } else {
       Logger.log('File already exist in target folder: ' + filename);
       file = existingFiles[filename];
     }
-    //var downloadUrl = file.getDownloadUrl();
-    //var embedUrl = downloadUrl.substr(0, downloadUrl.indexOf('?')s);
-    //properties.profileUrl = embedUrl;
+  
     properties.profileUrl = 'https://drive.google.com/uc?id=' + file.getId();
     Logger.log(properties.profileUrl);
     members.push(properties);
   }
 
   return members;
+}
+
+function checkUpdate(existingFiles, filename, presentationLastUpdated) {
+  if(existingFiles[filename]) {
+    return false;
+    
+    // ignored code
+    const thumbnailLastUpdated = existingFiles[filename].getLastUpdated();
+    const delta = (presentationLastUpdated - thumbnailLastUpdated);
+    mustUpdate = delta > 3600;
+    if(mustUpdate) {
+      Logger.log('Thumbnail already exist but needs to be updated as it is too old: ' + filename + ' delta ' + delta);
+      DriveApp.removeFile(existingFiles[filename]);
+    }
+  } else {
+    return true;
+  }
+}
+
+function createCopyThumbnail(presentationId, slideObjectId, filename) {
+  Logger.log('Creating: ' + filename);
+  const contentUrl = createThumbnail(presentationId, slideObjectId);
+  const blob = UrlFetchApp.fetch(contentUrl).getBlob();
+  const file = DriveApp.createFile(blob);
+  file.setName(filename);
+  return file;
 }
