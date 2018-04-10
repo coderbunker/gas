@@ -65,7 +65,7 @@ function convertSlidesFromPresentation(presentation) {
     properties.objectId = slide.getObjectId();
     var filename = properties.fullname + '.png';
     var file;
-    var mustUpdate = checkUpdate(existingFiles, filename, presentationLastUpdated);
+    var mustUpdate = checkUpdate(thumbnailsFolder, existingFiles, filename, presentationLastUpdated);
     if(mustUpdate) {
       file = createCopyThumbnail(presentationId, slideObjectId, filename);
       thumbnailsFolder.addFile(file);
@@ -82,17 +82,15 @@ function convertSlidesFromPresentation(presentation) {
   return members;
 }
 
-function checkUpdate(existingFiles, filename, presentationLastUpdated) {
-  if(existingFiles[filename]) {
-    return false;
-    
+function checkUpdate(thumbnailsFolder, existingFiles, filename, presentationLastUpdated) {
+  if(existingFiles[filename]) {    
     // ignored code
     const thumbnailLastUpdated = existingFiles[filename].getLastUpdated();
     const delta = (presentationLastUpdated - thumbnailLastUpdated);
-    mustUpdate = delta > 3600;
+    mustUpdate = delta > (7 * 24 * 60 * 60 * 1000); // one week
     if(mustUpdate) {
       Logger.log('Thumbnail already exist but needs to be updated as it is too old: ' + filename + ' delta ' + delta);
-      DriveApp.removeFile(existingFiles[filename]);
+      trashFile(thumbnailsFolder, existingFiles[filename]);
     }
   } else {
     return true;
