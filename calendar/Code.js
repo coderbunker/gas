@@ -13,9 +13,10 @@ function onChange(e) {
   var calendarEventObject = {
       "date": e.getStartTime().getFullYear() + "-" + (e.getStartTime().getMonth()+1) + "-" + e.getStartTime().getDate(),
       "activity": e.getTitle(),
-      "startTime": e.getStartTime().toTimeString(),
-      "stopTime": e.getEndTime().toTimeString(),
+      "startTime": Utilities.formatDate(events[i].getStartTime(), "GMT-7", "MM-dd-yyyy HH:mm"),
+      "stopTime": e.getEndTime(),
       "projectName": e.getOriginalCalendarId(),
+      "taskName": e.getDescription()
   }
  
       return calendarEventObject;
@@ -23,5 +24,5 @@ function onChange(e) {
   //setting the constant data to be the result of mapping over array of calendar events. 
   Logger.log(data);
   
-  PropertiesService.getScriptProperties().setProperty('LAST_UPDATE', new Date())
+  //PropertiesService.getScriptProperties().setProperty('LAST_UPDATE', new Date())
 }
