@@ -8,7 +8,7 @@ We use these scripts to Extract, Transform, Load the data.
 
 ## Usage
 
-Use class to pull, push and deploy:
+Use clasp to pull, push and deploy:
 
 https://developers.google.com/apps-script/guides/clasp
 
