@@ -7,6 +7,7 @@ function snapshot(spreadsheet, sheetNames, category) {
 }
 
 
+// run this within Leads & Opportunities sheet only
 function snapshotAll(spreadsheet) {
   const sheet = spreadsheet.getSheetByName('Accounts');
   const mapping = getHeaderMapping(sheet);
@@ -35,7 +36,6 @@ function snapshotAll(spreadsheet) {
     }
   });
 }
-
 
 // needs work, won't activate
 /*
