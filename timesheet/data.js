@@ -14,7 +14,11 @@ function export(spreadsheet, sheetNames, category) {
   
   sheetNames.forEach(function(name) {
     var sheet = spreadsheet.getSheetByName(name);
-    obj['sheets'][name] = { data: exportSheet(spreadsheet, sheet) }
+    if(sheet) {
+      obj['sheets'][name] = { data: exportSheet(spreadsheet, sheet) }
+    } else {
+      Logger.log('No sheet %s in %s', name, spreadsheet.getId());
+    }
   });
   
   return obj;

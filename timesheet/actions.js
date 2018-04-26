@@ -3,6 +3,7 @@ function snapshot(spreadsheet, sheetNames, category) {
   const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
   const response = postData(spreadsheet.getId(), exported, snapshotEndpoint);
   Logger.log(response);
+  snapshotAllCalendarOfSpreadsheet(spreadsheet);
   return response;
 }
 
@@ -10,6 +11,10 @@ function snapshot(spreadsheet, sheetNames, category) {
 // run this within Leads & Opportunities sheet only
 function snapshotAll(spreadsheet) {
   const sheet = spreadsheet.getSheetByName('Accounts');
+  if(!sheet) {
+    Logger.log('No sheet Accounts found, is this a the Leads & Opportunities sheet?');
+    return;
+  }
   const mapping = getHeaderMapping(sheet);
   const accounts = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
   const entries = convertToEntries(accounts, mapping);

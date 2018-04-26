@@ -26,7 +26,6 @@ function onOpen() {
   }
   if(getActiveSpreadsheet().getSheetByName('Timesheet')) {
     menu.addItem('Snapshot Timesheet', 'snapshotTrigger');
-    menu.addItem('Snapshot associated calendars', 'snapshotAllCalendarOfSpreadsheetTrigger');
   }
   menu.addToUi();
 }
