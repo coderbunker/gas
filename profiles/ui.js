@@ -34,7 +34,8 @@ function getTargetFolderName() {
 }
 
 function showThumbnailsSidebar() {
-  const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
+  const presentation = SlidesApp.getActivePresentation();
+  const members = convertSlidesFromPresentation(presentation);
   const sortedMembers = members.sort(function(m1, m2) {
     return m1.fullname.localeCompare(m2.fullname);
   });
