@@ -87,7 +87,8 @@ function checkUpdate(thumbnailsFolder, existingFiles, filename, presentationLast
     // ignored code
     const thumbnailLastUpdated = existingFiles[filename].getLastUpdated();
     const delta = (presentationLastUpdated - thumbnailLastUpdated);
-    mustUpdate = delta > (7 * 24 * 60 * 60 * 1000); // one week
+    //const mustUpdate = delta > (7 * 24 * 60 * 60 * 1000); // one week
+    const mustUpdate = delta > (60 * 60 * 1000); // one hour
     if(mustUpdate) {
       Logger.log('Thumbnail already exist but needs to be updated as it is too old: ' + filename + ' delta ' + delta);
       trashFile(thumbnailsFolder, existingFiles[filename]);
