@@ -10,13 +10,13 @@ function snapshotAllCalendarOfSpreadsheet(spreadsheet) {
   const responses = entries.map(function(entry) { 
     Logger.log(entry.resource);
     Logger.log(entry.fullname);
-    if(!entry.calendar) {
+    if(!entry.calendarid) {
       Logger.log('No calendar associated to %s', entry.resource);
       return null;
     }
     const calendar = CalendarApp.getCalendarById(entry.calendarid);
     if(!calendar) {
-      Logger.log('not a valid id: %s', entry.calendarid);
+      Logger.log('not a valid calendar id: %s', entry.calendarid);
       return null;
     }
     return snapshotCalendar(calendar);

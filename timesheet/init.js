@@ -21,13 +21,22 @@ function doGet() {
 function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
   const menu = SpreadsheetApp.getUi().createMenu(orgName)
-  if(getActiveSpreadsheet().getSheetByName('Accounts')) {
+  const spreadsheet = getActiveSpreadsheet();
+  if(spreadsheet.getSheetByName('Accounts')) {
     menu.addItem('Snapshot Accounts & All Timesheets', 'snapshotAllTrigger');
   }
-  if(getActiveSpreadsheet().getSheetByName('Timesheet')) {
+  if(spreadsheet.getSheetByName('Timesheet')) {
     menu.addItem('Snapshot Timesheet and associated calendars', 'snapshotTrigger');
   }
+  if(spreadsheet.getSheetByName('Accounts Receivable Transactions')) {
+    menu.addItem('Snapshot WaveApp', 'snapshotWaveApp');
+  }
   menu.addToUi();
+}
+
+function snapshotWaveApp() {
+  const spreadsheet = getActiveSpreadsheet();
+  snapshot(spreadsheet, ['Accounts Receivable Transactions'], 'WaveApp');
 }
 
 function snapshotTrigger() {
