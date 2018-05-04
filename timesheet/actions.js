@@ -2,6 +2,7 @@ function snapshot(spreadsheet, sheetNames, category) {
   const exported = export(spreadsheet, sheetNames, category);
   const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
   const response = postData(spreadsheet.getId(), exported, snapshotEndpoint);
+  Logger.log('server response as follows: ');
   Logger.log(response);
   snapshotAllCalendarOfSpreadsheet(spreadsheet);
   return response;
