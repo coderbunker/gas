@@ -1,23 +1,27 @@
 function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
-  SlidesApp.getUi()
+  SpreadsheetApp.getUi()
       .createMenu(orgName)
-      .addItem('Snapshot Groups', 'snapshot')
+      .addItem('Snapshot Groups', 'snapshotCaptureOutput')
       .addToUi();
 }
 
-function snapshot() {
-  const groups = importGroups();
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Snapshot');
-  sheet.clear();
-  var emailsWithLabels = {};
-  Object.keys(groups).forEach(function(g) {
-    Object.keys(groups[g]).forEach(function(email) {
-      if(!emailsWithLabels[email]) {
-        emailsWithLabels[email] = [email];
-      }
-      emailsWithLabels[email].push(g);
-    });
+function getOutputSheet(spreadsheet) {
+  var sheet = spreadsheet.getSheetByName('Snapshot Groups');
+  if(!sheet) {
+    sheet = spreadsheet.insertSheet('Snapshot Groups');
+  } else { 
+    sheet.clear();
+  }
+  return sheet;
+}
+
+function snapshotCaptureOutput() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const timezone = spreadsheet.getSpreadsheetTimeZone();
+  const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+  const sheet = getOutputSheet(spreadsheet);
+  snapshot(endpoint, timezone, function(input, output) {
+    sheet.appendRow([input, output]);
   });
-  insertIntoSpreadsheet(sheet, emailsWithLabels);
 }

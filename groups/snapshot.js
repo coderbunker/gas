@@ -1,16 +1,4 @@
-function export(doc) {
-  const payload = {
-    id:id, 
-    name: name, 
-    data: data,
-    apptype: 'Groups',
-    category: 'Membership'
-  };
-  return payload;
-}
-
-function snapshot() {
-  const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+function snapshot(endpoint, timezone, cb) {
   const groups = listAllGroups();
   groups.forEach(function(g) {
     var doc = {
@@ -19,9 +7,11 @@ function snapshot() {
       email: g.email,
       id: g.id,
       apptype: 'Groups',
-      category: 'Membership'
+      category: 'Membership',
+      timezone: timezone
     };
     const output = postData(g.id, doc, endpoint);
     Logger.log(output);
+    cb(doc, output);
   });
 }
