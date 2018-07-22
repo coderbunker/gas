@@ -1,29 +1,26 @@
 function snapshot(spreadsheet, sheetNames, category) {
   const exported = export(spreadsheet, sheetNames, category);
   const snapshotEndpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+  Logger.log('Using endpoint %s for spreadsheet %s', snapshotEndpoint, spreadsheet.getName());
   const response = postData(spreadsheet.getId(), exported, snapshotEndpoint);
-  Logger.log('server response as follows: ');
-  Logger.log(response);
+  log('server response as follows: %s', response);
   snapshotAllCalendarOfSpreadsheet(spreadsheet);
   return response;
 }
-
 
 // run this within Leads & Opportunities sheet only
 function snapshotAll(spreadsheet) {
   const sheet = spreadsheet.getSheetByName('Accounts');
   if(!sheet) {
-    Logger.log('No sheet Accounts found, is this a the Leads & Opportunities sheet?');
+    log('No sheet Accounts found, is this %s a Opportunities sheet? ', spreadsheet.getId());
     return;
   }
   const mapping = getHeaderMapping(sheet);
   const accounts = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
   const entries = convertToEntries(accounts, mapping);
   const responses = entries.map(function(entry) { 
-    Logger.log(entry.client);
-    Logger.log(entry.timesheet);
     if(!entry.timesheet) {
-      Logger.log('No timesheet or invalid format for client %s: %s', entry.client, entry.timesheet);
+      log('No timesheet or invalid format for client %s: %s', entry.client, entry.timesheet);
       return null;
     }
     const timesheet = SpreadsheetApp.openByUrl(entry.timesheet);

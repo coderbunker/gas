@@ -12,7 +12,7 @@ function getActiveSpreadsheet() {
 }
 
 function doGet() {
-  const exported = export(getActiveSpreadsheet());
+  const exported = export(getActiveSpreadsheet(), ['Timesheet', 'Balance'], 'Timesheet');
   return ContentService
     .createTextOutput(JSON.stringify(exported, 4, null))
     .setMimeType(ContentService.MimeType.JSON);

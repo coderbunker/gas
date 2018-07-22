@@ -4,6 +4,10 @@ function snapshotAllCalendarOfSpreadsheetTrigger() {
 
 function snapshotAllCalendarOfSpreadsheet(spreadsheet) {
   const sheet = spreadsheet.getSheetByName('Balance');
+  if(!sheet) {
+    Logger.log('no balance sheet in spreadsheet ' + spreadsheet.getName());
+    return;
+  }
   const mapping = getHeaderMapping(sheet);
   const accounts = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn()).getDisplayValues();
   const entries = convertToEntries(accounts, mapping);

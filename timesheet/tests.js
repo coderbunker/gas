@@ -12,3 +12,9 @@ function test_getHeaderMapping() {
 function test_snapshotAll() {
   snapshotAll();
 }
+
+
+function test_endpoint() {
+  const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
+  Logger.log(endpoint);
+}
