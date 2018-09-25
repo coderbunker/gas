@@ -91,7 +91,8 @@ function checkUpdate(thumbnailsFolder, existingFiles, filename, presentationLast
     const mustUpdate = delta > (60 * 60 * 1000); // one hour
     if(mustUpdate) {
       Logger.log('Thumbnail already exist but needs to be updated as it is too old: ' + filename + ' delta ' + delta);
-      trashFile(thumbnailsFolder, existingFiles[filename]);
+      //todo: make this selective in the user interface
+      //trashFile(thumbnailsFolder, existingFiles[filename]);
     }
   } else {
     return true;

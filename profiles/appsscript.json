@@ -5,6 +5,10 @@
       "userSymbol": "Drive",
       "serviceId": "drive",
       "version": "v2"
+    }, {
+      "userSymbol": "Sheets",
+      "serviceId": "sheets",
+      "version": "v4"
     }],
     "libraries": [{
       "userSymbol": "OAuth2",
@@ -16,5 +20,12 @@
     "access": "ANYONE_ANONYMOUS",
     "executeAs": "USER_DEPLOYING"
   },
-  "exceptionLogging": "STACKDRIVER"
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/presentations.currentonly",
+    "https://www.googleapis.com/auth/script.container.ui",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/spreadsheets"
+  ]
 }

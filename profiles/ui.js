@@ -2,15 +2,6 @@
  * @OnlyCurrentDoc
  */
 
-// if you have multiple users account, watch out for the generated URL as it contains a reference to user /u/1
-// that you need to remove
-// https://stackoverflow.com/questions/47045209/google-drive-page-not-found-sorry-unable-to-open-the-file-at-this-time
-function doGet(e) {
-  const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
-  return ContentService.createTextOutput(JSON.stringify(members, null, 4))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
 function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
   SlidesApp.getUi()
@@ -20,6 +11,7 @@ function onOpen() {
       .addItem('Convert slides', 'convertSlides')
       .addItem('Show thumbnails', 'showThumbnailsSidebar')
       .addItem('Snapshot', 'snapshot')
+      .addItem('Convert to spreadsheet', 'convertToSpreadsheet')
       .addToUi();
 }
 
@@ -49,6 +41,14 @@ function convertSlides() {
   const page = render(members);
 
   SlidesApp.getUi().showSidebar(page);
+}
+
+function convertToSpreadsheet() {
+  const presentation = SlidesApp.getActivePresentation();
+  const members = convertSlidesFromPresentation(presentation);
+  console.log(members);
+  const spreadsheetUrl = exportToSpreadsheet(members);
+  console.log(spreadsheetUrl);
 }
 
 function getLastUpdateTimestamp() {
