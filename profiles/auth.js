@@ -20,7 +20,7 @@ function getPresentationService() {
       .setPropertyStore(PropertiesService.getUserProperties())
 
       // Set the scopes to request (space-separated for Google services).
-      .setScope('https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/presentations')
+      .setScope('https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/presentations https://www.googleapis.com/auth/spreadsheets')
 
       // Below are Google-specific OAuth2 parameters.
 
