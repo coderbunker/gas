@@ -6,21 +6,11 @@ function onOpen() {
       .addToUi();
 }
 
-
-
 function sendEmail() {
   var file = DriveApp.getFileById('1WKqYD9GLqmLjDqJyeY4BPkvl31vgRAeM');
   
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = spreadsheet.getSheetByName("Emails");
- /* // Fetch the range of cells (row, column)
-  var dataRangeEmail = sheet.getRange(2, 2)
-  // Fetch values for each row in the Range.
-  var email = dataRangeEmail.getValues();
-  
-  var dataRangeName = sheet.getRange(2, 1)
-  var name = dataRangeName.getValue()*/
-  
   var startRow = 2; // First row of data to process
   var numRows = sheet.getLastRow(); // Number of rows to process 
   // Fetch the range of cells (row, column, numRows, numColumns--this check column 3 is it is duplicate)
@@ -39,7 +29,7 @@ function sendEmail() {
       GmailApp.sendEmail(email, subject, "", 
                      {
                        "from":"services@coderbunker.com", "name": "Coderbunker Services", 
-                       //"cc":"bizdev@coderbunker.com",
+                       "cc":"bizdev@coderbunker.com",
                        htmlBody: html, 
                        inlineImages: {imageKey: file.getAs(MimeType.PNG)},
                       });
