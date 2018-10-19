@@ -14,7 +14,7 @@ function sendEmail() {
   var startRow = 2; // First row of data to process
   var numRows = sheet.getLastRow(); // Number of rows to process 
   // Fetch the range of cells (row, column, numRows, numColumns--this check column 3 is it is duplicate)
-  var dataRange = sheet.getRange(startRow, 1, numRows, 3);
+  var dataRange = sheet.getRange(startRow, 1, numRows - 1, 3);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
   for (var i = 0; i < data.length; ++i) {
