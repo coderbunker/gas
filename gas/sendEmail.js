@@ -24,7 +24,7 @@ function sendEmail() {
     var isBlank = sheet.getRange(startRow + i, 3, 1, 1).isBlank();
     if (isBlank) { // Prevents sending duplicates
       var html = HtmlService.createHtmlOutputFromFile('emailTemplate').getContent();
-      var subject = name + "'s " + "Coderbunker Onboarding"
+      var subject = name + "'s " + "Coderbunker Onboarding";
   
       GmailApp.sendEmail(email, subject, "", 
                      {
