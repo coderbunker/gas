@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/clasp": "^1.1.1"
+    "@google/clasp": "^1.6.3"
   }
 }
