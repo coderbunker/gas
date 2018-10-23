@@ -24,22 +24,11 @@ function retrieveStoreKeywordsProperties(slide, key) {
   return keywords;
 }
 
-function getPresentationLastUpdated(presentation) {
-  const presentationFile = DriveApp.getFileById(presentation.getId());
-  return presentationFile.getLastUpdated();
-}
-
-function getPresentationFolder(presentation) {
-  const presentationFile = DriveApp.getFileById(presentation.getId());
-  return presentationFile.getParents().next();
-}
-
-
 function convertSlidesFromPresentation(presentation) {
   const presentationLastUpdated = getPresentationLastUpdated(presentation);
   const presentationFolder = getPresentationFolder(presentation);
   const presentationId = presentation.getId();
-  const thumbnailsFolder = createThumbnailsFolder(presentationFolder, getTargetFolderName());
+  const thumbnailsFolder = getDriveStorageFolder();
   const slides = presentation.getSlides();
   const members = [];
   const existingFiles = allFiles(thumbnailsFolder);
