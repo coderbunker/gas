@@ -54,6 +54,5 @@ function convertToSpreadsheet() {
 function getLastUpdateTimestamp() {
   //const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
   const updated = DriveApp.getFileById(getTestPresentationId());
-  DriveApp.
   Logger.log(updated);
 }
