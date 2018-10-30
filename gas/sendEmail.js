@@ -7,8 +7,10 @@ function onOpen() {
 }
 
 function sendEmail() {
-  var file = DriveApp.getFileById('1KvZudA9OtE-PRPyY7kP567kjhWGJqUop');
-  var addDrive = DriveApp.getFileById('1Mh_uizD2jeJ72tIdQiD4Y8nzwi-CsozD');
+  var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
+  var profileImage = DriveApp.getFileById(profileImageFileId);
+  var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
+  var addDriveImage = DriveApp.getFileById(addDriveImageId);
   
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = spreadsheet.getSheetByName("Emails");
@@ -40,8 +42,8 @@ function sendEmail() {
           "cc":"bizdev@coderbunker.com",
           htmlBody: htmlContent, 
           inlineImages: {
-            imageKey: file.getAs(MimeType.PNG), 
-            addDrive: addDrive.getAs(MimeType.PNG)
+            imageKey: profileImage.getAs(MimeType.PNG), 
+            addDrive: addDriveImage.getAs(MimeType.PNG),
           },
         }
       );
