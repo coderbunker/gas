@@ -1,0 +1,3 @@
+#!/bin/bash
+docker tag $DOCKER_REPO $DOCKER_REPO:`date +%Y-%m-%d`
+docker push $DOCKER_REPO:`date +%Y-%m-%d`
