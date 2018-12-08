@@ -1,4 +1,8 @@
-
+/**
+ * Export a source file to a specific folder
+ *
+ * @returns {File}
+ */
 function export(folder, sourceFile, sourceFileId) {
   const blob = sourceFile.getAs('application/pdf');
   file = DriveApp.createFile(blob);
@@ -7,6 +11,13 @@ function export(folder, sourceFile, sourceFileId) {
   return file;
 }
 
+/**
+ * Search for a name inside a folder and returns first one
+ *
+ * @param {Folder} folder 
+ * @param {String} name 
+ * @returns {File}
+ */
 function searchName(folder, name) {
   const iterator = folder.getFilesByName(name + '.pdf');
   if(!iterator.hasNext()) {
@@ -15,6 +26,9 @@ function searchName(folder, name) {
   return iterator.next();
 }
 
+/**
+ * @return {String}
+ */
 function getDocName(url) {
   const id = getIdFromUrl(url);
   const file = DriveApp.getFileById(id);
