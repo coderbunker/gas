@@ -1,11 +1,3 @@
-// Use this code for Google Docs, Slides, Forms, or Sheets.
-function onOpen() {
-  SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-      .createMenu('Coderbunker')
-      .addItem('Send email', 'sendEmail')
-      .addToUi();
-}
-
 function sendEmail() {
   var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
   var profileImage = DriveApp.getFileById(profileImageFileId);
@@ -21,15 +13,15 @@ function sendEmail() {
   var dataRange = sheet.getRange(firstRowToProcess, 1, numRowsToProcess - 1, SENT_COLUMN_INDEX);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
+  var htmlTemplate = HtmlService.createTemplateFromFile('emailTemplate');
   for (var i = 0; i < data.length; ++i) {
     var row = data[i];
     var name = row[0]; // First column
     var email = row[1]; // Second column
     var isBlank = sheet.getRange(firstRowToProcess + i, SENT_COLUMN_INDEX, 1, 1).isBlank();
     if (isBlank) { // Prevents sending duplicates
-      var htmlTemplate = HtmlService.createHtmlOutputFromFile('emailTemplate');
-      var htmlContent = htmlTemplate.getContent();
-      
+      htmlTemplate.name = name;
+      htmlContent = htmlTemplate.evaluate().getContent();
       var subject = name + "'s " + "Coderbunker Onboarding";
   
       GmailApp.sendEmail(
@@ -50,7 +42,7 @@ function sendEmail() {
       sheet.getRange(firstRowToProcess + i, 3).setValue(new Date());
       // Make sure the cell is updated right away in case the script is interrupted
       SpreadsheetApp.flush();
-
+ 
     }
   }
 }
