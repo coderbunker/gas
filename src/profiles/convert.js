@@ -45,7 +45,7 @@ function convertSlidesFromPresentation(presentation) {
     }
 
     //TODO: need to reactivate natural language account
-    //properties.keywords = retrieveStoreKeywordsProperties(slide, 'keywords ' + properties.fullname);
+    //properties.keywords = retrieveStoreKeywordsProperties(slide, 'keywords ' + properties.fullname); 
     
     if(properties.altnames) {
       properties.altnames = properties.altnames.split(',');
