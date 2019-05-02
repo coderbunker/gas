@@ -21,3 +21,15 @@ function gotoSlide(slideId) {
   })
   slide.selectAsCurrentPage();
 }
+
+function deleteKey(key) {
+  PropertiesService.getDocumentProperties().deleteProperty(key);
+}
+
+function deleteAllProperties() {
+  PropertiesService.getDocumentProperties().deleteAllProperties();
+}
+
+function getKeyValue(key) {
+  return PropertiesService.getDocumentProperties().getProperty(key);
+}

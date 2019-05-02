@@ -13,6 +13,7 @@ function onOpen() {
       .addItem('Snapshot to database server', 'snapshot')
       .addItem('Convert to spreadsheet', 'convertToSpreadsheet')
       .addItem('Convert to JSON', 'convertToJson')
+      .addItem('Show document properties', 'showProperties')
       .addToUi();
 }
 
@@ -28,14 +29,14 @@ function showThumbnailsSidebar() {
   const sortedMembers = members.sort(function(m1, m2) {
     return m1.fullname.localeCompare(m2.fullname);
   });
-  const page = render(sortedMembers);
+  const page = renderMembers(sortedMembers);
   SlidesApp.getUi().showSidebar(page);
 }
 
 function convertSlides() {
   const presentation = SlidesApp.getActivePresentation();
   const members = convertSlidesFromPresentation(presentation);
-  const page = render(members);
+  const page = renderMembers(members);
 
   SlidesApp.getUi().showSidebar(page);
 }
@@ -57,6 +58,13 @@ function showUrl(url) {
   var template = HtmlService.createTemplate(
     'Export to : <a href="<?= url ?>" target="_blank">url</a> ');
   template.url = url;
-  var page = template.evaluate();
+  const page = template.evaluate();
+  SlidesApp.getUi().showSidebar(page);
+}
+
+function showProperties() {
+  const properties = PropertiesService.getDocumentProperties();
+  const kv = properties.getProperties();
+  const page = renderKeyValues(kv);
   SlidesApp.getUi().showSidebar(page);
 }
