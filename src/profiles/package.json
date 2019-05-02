@@ -1,0 +1,16 @@
+{
+  "name": "profiles",
+  "version": "1.0.0",
+  "description": "## Overview",
+  "main": "auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "author": "Ricky Ng-Adam <rngadam@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-googleappsscript": "^1.0.1"
+  }
+}

@@ -1,4 +1,4 @@
-function export(doc) {
+function exportToPostData(doc) {
   const id = doc.getId();
   const name = doc.getName();
   const data = convertSlidesFromPresentation(doc);
@@ -13,7 +13,7 @@ function export(doc) {
 }
 
 function snapshot() {
-  const exported = export(SlidesApp.getActivePresentation())
+  const exported = exportToPostData(SlidesApp.getActivePresentation())
   const endpoint = PropertiesService.getScriptProperties().getProperty('SNAPSHOT_ENDPOINT');
   const output = postData(SlidesApp.getActivePresentation().getId(), exported, endpoint);
   Logger.log(output);
