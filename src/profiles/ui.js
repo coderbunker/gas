@@ -6,12 +6,13 @@ function onOpen() {
   const orgName = PropertiesService.getScriptProperties().getProperty('ORG_NAME');
   SlidesApp.getUi()
       .createMenu(orgName)
-      .addItem('Authorize', 'showSidebar')
+      .addItem('Authorize script permissions', 'showSidebar')
       .addItem('Logout', 'clearService')
-      .addItem('Convert slides', 'convertSlides')
-      .addItem('Show thumbnails', 'showThumbnailsSidebar')
-      .addItem('Snapshot', 'snapshot')
+      .addItem('Convert slides and show (unsorted)', 'convertSlides')
+      .addItem('Convert slides and show (sorted by name)', 'showThumbnailsSidebar')
+      .addItem('Snapshot to database server', 'snapshot')
       .addItem('Convert to spreadsheet', 'convertToSpreadsheet')
+      .addItem('Convert to JSON', 'convertToJson')
       .addToUi();
 }
 
@@ -19,10 +20,6 @@ function clearService(){
   OAuth2.createService('presentation2')
       .setPropertyStore(PropertiesService.getUserProperties())
       .reset();
-}
-
-function getTargetFolderName() {
-  return PropertiesService.getScriptProperties().getProperty('TARGET_FOLDER_NAME');
 }
 
 function showThumbnailsSidebar() {
@@ -44,16 +41,22 @@ function convertSlides() {
 }
 
 function convertToSpreadsheet() {
-  const presentation = SlidesApp.getActivePresentation();
-  const members = convertSlidesFromPresentation(presentation);
-  console.log(members);
+  const members = JSON.parse(getJsonDocAsText());
   const spreadsheetUrl = exportToSpreadsheet(members);
   console.log(spreadsheetUrl);
-  SlidesApp.getUi().alert('Exported to: ' + spreadsheetUrl);
+  showUrl(spreadsheetUrl);
 }
 
-function getLastUpdateTimestamp() {
-  //const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
-  const updated = DriveApp.getFileById(getTestPresentationId());
-  Logger.log(updated);
+function convertToJson() {
+  const docId = getJsonDocId();
+  const docUrl = getUrl(docId);
+  showUrl(docUrl);
+}
+
+function showUrl(url) {
+  var template = HtmlService.createTemplate(
+    'Export to : <a href="<?= url ?>" target="_blank">url</a> ');
+  template.url = url;
+  var page = template.evaluate();
+  SlidesApp.getUi().showSidebar(page);
 }
