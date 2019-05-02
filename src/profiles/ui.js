@@ -49,6 +49,7 @@ function convertToSpreadsheet() {
   console.log(members);
   const spreadsheetUrl = exportToSpreadsheet(members);
   console.log(spreadsheetUrl);
+  SlidesApp.getUi().alert('Exported to: ' + spreadsheetUrl);
 }
 
 function getLastUpdateTimestamp() {
