@@ -37,7 +37,9 @@ function createNewUpdateMembersJsonDoc(membersDocId, presentation) {
   storageFolder.addFile(membersFile);
 
   // trash the old document
-  trashFileById(storageFolder, membersDocId);
+  if(membersDocId) {
+    trashFileById(storageFolder, membersDocId);
+  }
   
   // return new file id
   return membersFile.getId();
