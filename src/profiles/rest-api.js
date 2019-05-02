@@ -1,7 +1,7 @@
 // if you have multiple users account, watch out for the generated URL as it contains a reference to user /u/1
 // that you need to remove
 // https://stackoverflow.com/questions/47045209/google-drive-page-not-found-sorry-unable-to-open-the-file-at-this-time
-function doGet(e) {
+function getJsonDoc() {
   //const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
   const presentation = SlidesApp.getActivePresentation();
   const lastUpdatedTime = getLastUpdatedTime(presentation.getId());
@@ -32,7 +32,12 @@ function doGet(e) {
     json = DriveApp.getFileById(membersDocumentId).getAs('text/json').getDataAsString();
   }
   
+  return json;
+}
+
+function doGet(e) {
+  const json = getJsonDoc();
   return ContentService
     .createTextOutput(json)
-    .setMimeType(ContentService.MimeType.JSON);
+    .setMimeType(ContentService.MimeType.JSON);  
 }
