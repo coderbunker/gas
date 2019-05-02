@@ -10,8 +10,8 @@ function getJsonDocId() {
   const documentProperties = PropertiesService.getDocumentProperties();
   
   var membersDocId = documentProperties.getProperty('MEMBERS_DOCUMENT_ID');  
-  const previousLastUpdatedTime = getLastUpdatedTime(membersDocId);
-  const slidesLastUpdated = getLastUpdatedTime(presentation.getId());
+  const previousLastUpdatedTime = getLastUpdatedOfDocId(membersDocId);
+  const slidesLastUpdated = getLastUpdatedOfDocId(presentation.getId());
 
   if(slidesLastUpdated > previousLastUpdatedTime) {
     console.log('Members document needs update');

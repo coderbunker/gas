@@ -1,0 +1,11 @@
+{
+    "parserOptions": {
+	"ecmaVersion": 6
+    },
+    "plugins": [
+      "googleappsscript"
+    ],
+    "env": {
+      "googleappsscript/googleappsscript": true
+    }
+}
