@@ -19,6 +19,7 @@ function sendEmail() {
     var name = row[0]; // First column
     var email = row[1]; // Second column
     var isBlank = sheet.getRange(firstRowToProcess + i, SENT_COLUMN_INDEX, 1, 1).isBlank();
+    Logger.log(isBlank);
     if (isBlank) { // Prevents sending duplicates
       htmlTemplate.name = name;
       htmlContent = htmlTemplate.evaluate().getContent();
