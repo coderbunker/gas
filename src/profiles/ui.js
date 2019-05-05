@@ -7,6 +7,7 @@ function onOpen() {
   SlidesApp.getUi()
       .createMenu(orgName)
       .addItem('Authorize script permissions', 'showSidebar')
+      .addItem('Search', 'showSearch')
       .addItem('Show thumbnails (unsorted)', 'showThumbnailsSidebarUnsorted')
       .addItem('Show thumbnails (sorted by name)', 'showThumbnailsSidebarSorted')
       .addItem('Update thumbnails', 'convertSlides')
@@ -17,6 +18,8 @@ function onOpen() {
       .addItem('Logout', 'clearService')
       .addToUi();
 }
+
+
 
 function showThumbnailsSidebarSorted() {
   const members = getJsonDocAsObject();
@@ -65,5 +68,10 @@ function showProperties() {
   const properties = PropertiesService.getDocumentProperties();
   const kv = properties.getProperties();
   const page = renderKeyValues(kv);
+  SlidesApp.getUi().showSidebar(page);
+}
+
+function showSearch() {
+  const page = HtmlService.createHtmlOutputFromFile('search');
   SlidesApp.getUi().showSidebar(page);
 }

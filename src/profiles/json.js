@@ -8,7 +8,6 @@ function getJsonDocAsText() {
 }
 
 function getJsonDocId() {
-  //const members = convertSlidesFromPresentation(SlidesApp.openById(getTestPresentationId()));
   const presentation = SlidesApp.getActivePresentation();
   const documentProperties = PropertiesService.getDocumentProperties();
   
