@@ -36,6 +36,12 @@ function getPresentationService() {
       .setParam('approval_prompt', 'force');
 }
 
+function clearService(){
+  OAuth2.createService('presentation2')
+      .setPropertyStore(PropertiesService.getUserProperties())
+      .reset();
+}
+
 function showSidebar() {
   var presentationService = getPresentationService();
   if (!presentationService.hasAccess()) {

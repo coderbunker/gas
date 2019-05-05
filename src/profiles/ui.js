@@ -7,25 +7,19 @@ function onOpen() {
   SlidesApp.getUi()
       .createMenu(orgName)
       .addItem('Authorize script permissions', 'showSidebar')
-      .addItem('Logout', 'clearService')
-      .addItem('Convert slides and show (unsorted)', 'convertSlides')
-      .addItem('Convert slides and show (sorted by name)', 'showThumbnailsSidebar')
+      .addItem('Show thumbnails (unsorted)', 'showThumbnailsSidebarUnsorted')
+      .addItem('Show thumbnails (sorted by name)', 'showThumbnailsSidebarSorted')
+      .addItem('Update thumbnails', 'convertSlides')
       .addItem('Snapshot to database server', 'snapshot')
       .addItem('Convert to spreadsheet', 'convertToSpreadsheet')
       .addItem('Convert to JSON', 'convertToJson')
       .addItem('Show document properties', 'showProperties')
+      .addItem('Logout', 'clearService')
       .addToUi();
 }
 
-function clearService(){
-  OAuth2.createService('presentation2')
-      .setPropertyStore(PropertiesService.getUserProperties())
-      .reset();
-}
-
-function showThumbnailsSidebar() {
-  const presentation = SlidesApp.getActivePresentation();
-  const members = convertSlidesFromPresentation(presentation);
+function showThumbnailsSidebarSorted() {
+  const members = getJsonDocAsObject();
   const sortedMembers = members.sort(function(m1, m2) {
     return m1.fullname.localeCompare(m2.fullname);
   });
@@ -33,16 +27,21 @@ function showThumbnailsSidebar() {
   SlidesApp.getUi().showSidebar(page);
 }
 
+function showThumbnailsSidebarUnsorted() {
+  const members = getJsonDocAsObject();
+  const page = renderMembers(members);
+  SlidesApp.getUi().showSidebar(page);
+}
+
 function convertSlides() {
   const presentation = SlidesApp.getActivePresentation();
   const members = convertSlidesFromPresentation(presentation);
   const page = renderMembers(members);
-
   SlidesApp.getUi().showSidebar(page);
 }
 
 function convertToSpreadsheet() {
-  const members = JSON.parse(getJsonDocAsText());
+  const members = getJsonDocAsObject();
   const spreadsheetUrl = exportToSpreadsheet(members);
   console.log(spreadsheetUrl);
   showUrl(spreadsheetUrl);

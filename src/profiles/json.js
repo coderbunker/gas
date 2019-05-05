@@ -1,3 +1,6 @@
+function getJsonDocAsObject() {
+  return JSON.parse(getJsonDocAsText());
+}
 
 function getJsonDocAsText() {
   const membersDocId = getJsonDocId();
