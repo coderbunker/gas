@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+body {
+  font-family: "bebas neue", bebas, helvetica, 'PingFang SC',"Microsoft YaHei","微软雅黑",STXihei,"华文细黑", sans-serif;
+  background-color: #ECF0F1;
+  color: #50555c;
+}
+
+.profileImg {
+  border: 2px solid #50555c;
+  display: block;
+  max-width:250px;
+  max-height:215px;
+  width: auto;
+  height: auto;
+}
+
+.searchResult {
+  display: inline-flex;
+  flex-direction: column;
+  align-content: space-between;
+  font-weight: bold;
+  /* border-bottom: 1px solid #50555c; */
+  padding: 10px 5px 10px 5px;
+  /* padding-bottom: 20px;
+  padding-right: 5px; */
+  text-align: center;
+}
+
+.search-area {
+  text-align: center;
+  color: #50555c;
+}
+
+.search-btn {
+  background:#0099ff;
+  font-weight: bold;
+}
+
+.search-field {
+  background: #eee;
+}
+</style>
+    <title>Coderbunker</title>
+</head>
+<body>
+    <div class="search-section">
+        <div class="search-area">
+            <h2>Search</h2>
+            <input class="search-field" id="search" name="search" />
+            <button class="search-btn">Search</button>
+        </div>
+        <div class="search-results-area"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script>
+const inputArea = document.getElementById("search");
+const searchBtn = document.querySelector(".search-btn");
+const finalTextArea = document.querySelector(".final-text");
+
+var index = elasticlunr(function () {
+    this.addField('fullname');
+    this.addField('email');
+    this.addField('keywords');
+    this.addField('status');
+    this.setRef('objectId');
+});
+
+searchBtn.addEventListener("click", searchIt);
+inputArea.addEventListener("keyup", function(e) {
+    if (e.keyCode === 13) {
+        searchIt();
+    }
+});
+
+
+function objectLength(object) {
+    var length = 0;
+    for( var key in object ) {
+        if( object.hasOwnProperty(key) ) {
+            ++length;
+        }
+    }
+    return length;
+};
+
+
+function parseMembers(data) {
+   userJsonData = JSON.parse(data);
+   var usersNum = Object.keys(userJsonData).length;
+   for(let i = 0; i < usersNum; i++) {
+      index.addDoc(userJsonData[i]);
+   }
+}
+
+function fetchMembers() {
+   google.script.run.withSuccessHandler(parseMembers).getJsonDocAsText();
+}
+
+fetchMembers();
+
+function searchIt() {
+    let htmlText = '';
+
+    const searchStr = inputArea.value;
+    const matchArr = index.search(searchStr, {});
+    const allUsersArray = matchArr.map( match => {
+        return {
+          name: match.doc.fullname,
+          profile: match.doc.profileUrl
+        }
+      })
+
+    if (allUsersArray === undefined || allUsersArray.length == 0) {
+        htmlText += '<div class="searchResult">';
+        htmlText += '<p class="profileName"> Sorry, no users match this search term. </p>';
+        htmlText += '</div>';
+    } else {
+        for ( var key in allUsersArray ) {
+                htmlText += '<div class="searchResult">';
+                htmlText += '<p class="profileName"> ' + allUsersArray[key].name + '</p>';
+                htmlText += '<img class="profileImg" src="' + allUsersArray[key].profile + '">';
+                htmlText += '</div>';
+            
+        }
+    }
+
+        $(".search-results-area").html(htmlText);   
+}
+</script>
+</body>
+</html>
+
