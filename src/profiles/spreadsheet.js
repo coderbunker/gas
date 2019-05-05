@@ -1,7 +1,9 @@
 function exportToSpreadsheet(members) {
-  const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1SlE4TtKDTzw6tsznoBfQ1gbuWU1JD9IA7StXYbzQ0SM/edit#gid=0';
+  const spreadsheetUrl = PropertiesService.getScriptProperties().getProperty('EXPORT_SPREADSHEET_TARGET');
   const spreadsheet = SpreadsheetApp.openByUrl(spreadsheetUrl);
-
+  if(!spreadsheet) {
+    throw 'Invalid target for configuration EXPORT_SPREADSHEET_TARGET: ' + spreadsheetUrl;
+  }
   sheet = spreadsheet.getSheetByName('Export');
   sheet.clearContents();
   const propertyNames = {};
@@ -36,6 +38,6 @@ function exportToSpreadsheet(members) {
     });
     sheet.appendRow(row);
   });
-  
+   
   return spreadsheetUrl;
 }

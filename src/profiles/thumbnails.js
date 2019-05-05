@@ -36,12 +36,6 @@ function createThumbnailsFolder(presentationFolder, name) {
   return thumbnailsFolder;
 }
 
-function trashFile(folder, file) {
-  folder.removeFile(file)
-  DriveApp.removeFile(file);
-  file.setTrashed(true);
-}
-
 function allFiles(thumbnailsFolder) {
   const thumbnailsFolderFiles = thumbnailsFolder.getFiles();
   const existingFiles = {}
