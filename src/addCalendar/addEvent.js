@@ -17,7 +17,7 @@ function addEvent() {
     var description = row[4];           // 5 column
     
     var isBlank = ss.getRange(firstRowToProcess + i, ADDED_COLUMN_INDEX, 1, 1).isBlank();
-    if (isBlank) { // Prevents sending duplicates
+    if (isBlank) { // Prevents adding duplicates
       var addToCal = CalendarApp.getCalendarById("ancag.munteanu@gmail.com").createAllDayEvent(title, date, {location: location, description: description});
       
       ss.getRange(firstRowToProcess + i, 6).setValue(new Date());
