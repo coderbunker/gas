@@ -1,42 +1,4 @@
-function sendEmail(name, email) {
-  // sending onboarding email
-  var htmlTemplate = HtmlService.createTemplateFromFile("emailTemplate");
-  htmlTemplate.name = name;
-  htmlContent = htmlTemplate.evaluate().getContent();
-  var subject = name + "'s " + "Coderbunker Onboarding";
-
-  var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
-  var profileImage = DriveApp.getFileById(profileImageFileId);
-  var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
-  var addDriveImage = DriveApp.getFileById(addDriveImageId);
-  
-  GmailApp.sendEmail(
-    email, 
-    subject, 
-    "", 
-    {
-      from: "services@coderbunker.com",
-      name: "Coderbunker Services", 
-      cc: "bizdev@coderbunker.com",
-      htmlBody: htmlContent, 
-      inlineImages: {
-        imageKey: profileImage.getAs(MimeType.PNG),
-        addDrive: addDriveImage.getAs(MimeType.PNG),
-      },
-    }
-  );
-  
-  // save the email sending result
-  var newUserValues = [
-    [ name, email, new Date() ]
-  ];
-  var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
-  resultSheet.insertRowBefore(2);
-  var newUserRowRange = resultSheet.getRange("A2:C2");
-  newUserRowRange.setValues(newUserValues);
-}
-
-function sendEmailOld() {
+function sendEmail() {
   var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
   var profileImage = DriveApp.getFileById(profileImageFileId);
   var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
@@ -68,9 +30,9 @@ function sendEmailOld() {
         subject, 
         "", 
         {
-          from: "services@coderbunker.com", 
-          name: "Coderbunker Services", 
-          cc: "bizdev@coderbunker.com",
+          "from":"services@coderbunker.com", 
+          "name": "Coderbunker Services", 
+          "cc":"bizdev@coderbunker.com",
           htmlBody: htmlContent, 
           inlineImages: {
             imageKey: profileImage.getAs(MimeType.PNG), 
