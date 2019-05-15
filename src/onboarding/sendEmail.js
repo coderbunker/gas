@@ -9,7 +9,7 @@ function sendEmail(name, email) {
   var profileImage = DriveApp.getFileById(profileImageFileId);
   var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
   var addDriveImage = DriveApp.getFileById(addDriveImageId);
-  
+
   GmailApp.sendEmail(
     email, 
     subject, 
@@ -25,7 +25,7 @@ function sendEmail(name, email) {
       },
     }
   );
-  
+
   // save the email sending result
   var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
   var userRowIndex = searchRow(name, resultSheet);

@@ -15,3 +15,20 @@ function searchRow(keyword, sheet) {
 function logInfo2StackdriverLogging(string) {
     console.info(string);
 }
+
+function setProperty(propertyName, propertyValue, type) {
+    switch (type) {
+        case PROPERTIES_TYPE_SCRIPT: 
+            PropertiesService.getScriptProperties().setProperty(propertyName, propertyValue);
+            break;
+        case PROPERTIES_TYPE_USER:
+        PropertiesService.getUserProperties().setProperty(propertyName, propertyValue);
+            break;
+        case PROPERTIES_TYPE_DOCUMENT: 
+            PropertiesService.getDocumentProperties().setProperty(propertyName, propertyValue);
+            break;
+        default:
+            // TODO: log errors
+            break;
+    } 
+}

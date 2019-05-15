@@ -10,11 +10,32 @@ function testSearchRow() {
   Logger.log(searchRow(keyword, sheet));
 }
 
+function testSearchFolder() {
+  var parentFolder = DriveApp.getFolderById("0B-PYJiOSewXLUE1obURNLURxX1k");
+  var subFolders = parentFolder.getFolders();
+  var folderExists = false;
+    
+  var folders = parentFolder.searchFolders('title = "Angdi Chu"');
+  if (!folders.hasNext()) {
+    Logger.log("No folder named: Angdi Chu");
+  }
+  while (folders.hasNext()) {
+    Logger.log(folders.next().getName());
+  }
+}
+
 function testSendEmail() {
     var testUserName = "Test User - Andie";
     var testUserEmail = "angdichu@gmail.com";
 
     sendEmail(testUserName, testUserEmail);
+}
+
+function testCreateFolder() {
+  var testUserName = "Andie - Test";
+  var testUserEmail = "angdichu@gmail.com";
+  
+  createFolderNew(testUserName, testUserEmail);
 }
 
 function testEmailAlias() {

@@ -1,9 +1,42 @@
-function createFolderNew(name) {
+function createFolder(folderName, ownerEmail) {
+  var parentFolderId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PARENT_FOLDER_ID");
+  var personalPlanTemplateId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID");
   
+  var parentFolder = DriveApp.getFolderById(parentFolderId);
+  var subFolders = parentFolder.getFolders();
+  var userFolder;
+  var createdDate;
+    
+  var existFolders = parentFolder.searchFolders('title = "' + folderName + '"');
+  if (!existFolders.hasNext()) {
+    userFolder = parentFolder.createFolder(folderName);
+    var userFolderId = userFolder.getId();
+
+    var personalPlanTemplateDoc = DriveApp.getFileById(personalPlanTemplateId);
+    var makeCopy = personalPlanTemplateDoc.makeCopy(folderName + ' Coderbunker Resident Freelancer', userFolder);
+    
+    createdDate = new Date();
+    
+    try {
+      userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
+    } catch (err) {
+      logInfo2StackdriverLogging("[Onboarding - create folder] " + err);
+    }
+    
+  } else {
+    userFolder = existFolders.next();
+    createdDate = userFolder.getDateCreated();
+  }
+
+  // save the folder creating result
+  var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
+  var userRowIndex = searchRow(folderName, resultSheet);
+  var newUserRowRange = resultSheet.getRange(userRowIndex, 4); // get the "Folder created" cell
+  newUserRowRange.setValue(createdDate);
 }
 
 //Create folder if does not exists only
-function createFolder(){
+function createFolderOld(){
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = spreadsheet.getSheetByName("Emails");
   var firstRowToProcess = 2; // First row of data to process
