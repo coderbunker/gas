@@ -45,8 +45,8 @@ function createFolder2FailedOnes(){
   var firstRowToProcess = 2; // First row of data to process
   var numRowsToProcess = sheet.getLastRow(); // Number of rows to process 
   // Fetch the range of cells (row, column, numRows, numColumns--this check column 3 is it is duplicate)
-  const FOLER_CREATED_COLUMN_INDEX = 4;
-  var dataRange = sheet.getRange(firstRowToProcess, 1, numRowsToProcess - 1, FOLER_CREATED_COLUMN_INDEX);
+  const FOLDER_CREATED_COLUMN_INDEX = 4;
+  var dataRange = sheet.getRange(firstRowToProcess, 1, numRowsToProcess - 1, FOLDER_CREATED_COLUMN_INDEX);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
   
