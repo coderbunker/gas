@@ -33,7 +33,7 @@ function sendEmail(name, email) {
   newUserRowRange.setValue(new Date());
 }
 
-function sendEmailOld() {
+function sendEmail2FailedOnes() {
   var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
   var profileImage = DriveApp.getFileById(profileImageFileId);
   var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
