@@ -1,3 +1,7 @@
+function createFolderNew(name) {
+  
+}
+
 //Create folder if does not exists only
 function createFolder(){
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -47,41 +51,3 @@ function createFolder(){
     }
   }
 }
-
-       
-       /*var doc = DocumentApp.create(folderName + ' Coderbunker Resident Freelancer'),
-           docFile = DriveApp.getFileById( doc.getId() );
-
-       DriveApp.getFolderById(newFolderID).addFile( docFile );
-       DriveApp.getRootFolder().removeFile(docFile)
-       var getDocumentUrl = doc.getUrl();
-       var getFolderUrl = newFolder.getUrl();
-       
-       
-      /* var docID = '1CWqLtG9G7GgfMzSP110LSRmaBnZlMtX0D3kNOuPZr6g';
-       var baseDoc = DocumentApp.openById(docID);
-       var body = baseDoc.getBody();
-
-       var otherBody = DocumentApp.openByUrl(getDocumentUrl).getBody();
-       var totalElements = otherBody.getNumChildren();
-       for( var j = 0; j < totalElements; ++j ) {
-         var element = otherBody.getChild(j).copy();
-         var type = element.getType();
-         if( type == DocumentApp.ElementType.PARAGRAPH )
-           body.appendParagraph(element);
-         else if( type == DocumentApp.ElementType.TABLE )
-           body.appendTable(element);
-         else if( type == DocumentApp.ElementType.LIST_ITEM )
-           body.appendListItem(element);
-         else if( type == DocumentApp.ElementType.INLINE_IMAGE )
-           body.appendImage(element);
-
-    // add other element types as you want
-
-         else
-           throw new Error("According to the doc this type couldn't appear in the body: "+type);
-  }*/
-       
-       
-  
-

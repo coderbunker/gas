@@ -27,13 +27,10 @@ function sendEmail(name, email) {
   );
   
   // save the email sending result
-  var newUserValues = [
-    [ name, email, new Date() ]
-  ];
   var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
-  resultSheet.insertRowBefore(2);
-  var newUserRowRange = resultSheet.getRange("A2:C2");
-  newUserRowRange.setValues(newUserValues);
+  var userRowIndex = searchRow(name, resultSheet);
+  var newUserRowRange = resultSheet.getRange(userRowIndex, 3); // get the "Email sent" cell
+  newUserRowRange.setValue(new Date());
 }
 
 function sendEmailOld() {
