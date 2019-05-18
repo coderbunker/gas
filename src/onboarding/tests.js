@@ -45,6 +45,12 @@ function testEmailAlias() {
   Logger.log(me)
 }
 
+function testShowErrorDialog() {
+  var title = "Test Error";
+  var errMsg = "This is a error message.Oh yes!";
+  showErrorDialog(title, errMsg);
+}
+
 function testOnboarding() {
   // mimic event data
   var namedValues = {};

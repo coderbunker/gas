@@ -12,10 +12,6 @@ function searchRow(keyword, sheet) {
   return rowIndex;
 }
 
-function logInfo2StackdriverLogging(string) {
-    console.info(string);
-}
-
 function setProperty(propertyName, propertyValue, type) {
     switch (type) {
         case PROPERTIES_TYPE_SCRIPT: 

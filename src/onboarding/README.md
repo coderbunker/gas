@@ -2,7 +2,7 @@
 
 ## Onboarding automation flow
 
-See [this swimlane diagram](https://swimlanes.io/u/DMCO4LO8V)
+![Onboarding Automation (SH) Swimlane Diagram](https://static.swimlanes.io/83e3b9ee7675000994ee857b82d55f05.png)
 
 ## Development
 

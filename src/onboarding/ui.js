@@ -10,3 +10,13 @@ function onOpen() {
 
   spreadsheet.addMenu('Coderbunker', menuItems);
 }
+
+function showErrorDialog(title, errMsg) {
+  var template = HtmlService.createTemplateFromFile("errorDialogTemplate");
+  template.errMsg = errMsg;
+  var content = template.evaluate()
+                        .setWidth(300)
+                        .setHeight(100);
+
+  SpreadsheetApp.getUi().showModalDialog(content, title);
+}

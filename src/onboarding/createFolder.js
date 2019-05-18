@@ -20,7 +20,8 @@ function createFolder(folderName, ownerEmail) {
     try {
       userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
     } catch (err) {
-      logInfo2StackdriverLogging("[Onboarding - create folder] " + err);
+      showErrorDialog("Setting Folder Owner Failed", err);
+      console.error("[Onboarding - create folder] " + err);
     }
     
   } else {

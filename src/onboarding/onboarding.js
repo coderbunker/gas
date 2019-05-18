@@ -8,6 +8,6 @@ function onboarding(e) {
   sendEmail(submitUser.name, submitUser.email);
   createFolder(submitUser.name, submitUser.email);
 
-  // log
-  logInfo2StackdriverLogging('[Onboarding - Add from Form] name: ' + submitUser.name + ' ; email: ' + submitUser.email);  
+  // log to 
+  console.log('[Onboarding - Add from Form] name: ' + submitUser.name + ' ; email: ' + submitUser.email);  
 }
