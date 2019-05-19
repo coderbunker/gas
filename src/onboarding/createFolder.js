@@ -1,12 +1,55 @@
+function createFolder(folderName, ownerEmail) {
+  var parentFolderId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PARENT_FOLDER_ID");
+  var personalPlanTemplateId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID");
+  
+  var parentFolder = DriveApp.getFolderById(parentFolderId);
+  var subFolders = parentFolder.getFolders();
+  var userFolder;
+  var createdDate;
+    
+  var existFolders = parentFolder.searchFolders('title = "' + folderName + '"');
+  if (!existFolders.hasNext()) {
+    userFolder = parentFolder.createFolder(folderName);
+    var userFolderId = userFolder.getId();
+
+    var personalPlanTemplateDoc = DriveApp.getFileById(personalPlanTemplateId);
+    var makeCopy = personalPlanTemplateDoc.makeCopy(folderName + ' Coderbunker Resident Freelancer', userFolder);
+    
+    createdDate = new Date();
+    
+    try {
+      userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
+    } catch (err) {
+      showErrorDialog("Setting Folder Owner Failed" + folderName, err);
+      log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+      sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
+      console.error("Onboarding - create folder" + err);
+    }
+    
+  } else {
+    userFolder = existFolders.next();
+    createdDate = userFolder.getDateCreated();
+  }
+
+  // save the folder creating result
+  var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
+  var userRowIndex = searchRow(folderName, resultSheet);
+  var newUserRowRange = resultSheet.getRange(userRowIndex, 4); // get the "Folder created" cell
+  newUserRowRange.setValue(createdDate);
+}
+
 //Create folder if does not exists only
-function createFolder(){
+function createFolder2FailedOnes(){
+  var parentFolderId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PARENT_FOLDER_ID");
+  var personalPlanTemplateId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID");
+  
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = spreadsheet.getSheetByName("Emails");
   var firstRowToProcess = 2; // First row of data to process
   var numRowsToProcess = sheet.getLastRow(); // Number of rows to process 
   // Fetch the range of cells (row, column, numRows, numColumns--this check column 3 is it is duplicate)
-  const SENT_COLUMN_INDEX = 3;
-  var dataRange = sheet.getRange(firstRowToProcess, 1, numRowsToProcess - 1, SENT_COLUMN_INDEX);
+  const FOLDER_CREATED_COLUMN_INDEX = 4;
+  var dataRange = sheet.getRange(firstRowToProcess, 1, numRowsToProcess - 1, FOLDER_CREATED_COLUMN_INDEX);
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
   
@@ -14,74 +57,38 @@ function createFolder(){
     var row = data[i];
     var name = row[0]; // First column
     var email = row[1]; // Second column
- 
-    var folderID = "0B-PYJiOSewXLUE1obURNLURxX1k"
-    var folderName = name;
-    var parentFolder = DriveApp.getFolderById(folderID);
-    var subFolders = parentFolder.getFolders();
-    var folderExists = false;
-    var newFolder = '';
-  
-    // Check if folder already exists.
-    while(subFolders.hasNext()){
-      var folder = subFolders.next();
+    var createdDate = row[3]; // Fourth column
     
-      //If the name exists return the id of the folder
-      if(folder.getName() === folderName){
-        folderExists = true;
-        newFolder = folder;
-        return 
-        //If the name doesn't exists, then create a new folder
-      } else {
-        //If the file doesn't exists
-        newFolder = parentFolder.createFolder(folderName);
-        var newFolderID = newFolder.getId();
-        var accessFreelancer = newFolder.setOwner(email);
-       
-        var file = DriveApp.getFileById('1CWqLtG9G7GgfMzSP110LSRmaBnZlMtX0D3kNOuPZr6g');
-        var destinationFolder = DriveApp.getFolderById(newFolderID);
-        var makeCopy = file.makeCopy(folderName + ' Coderbunker Resident Freelancer', destinationFolder);
-       
-        return newFolder.getId();
+    if (createdDate) {  // already has a record in Email Sheet
+      continue;
+    }
+ 
+    var folderName = name;
+    var parentFolder = DriveApp.getFolderById(parentFolderId);
+    var existFolders = parentFolder.searchFolders('title = "' + folderName + '"');
+    
+    if (!existFolders.hasNext()) {
+      var userFolder = parentFolder.createFolder(folderName);
+      var userFolderId = userFolder.getId();
+      
+      var personalPlanTemplateDoc = DriveApp.getFileById(personalPlanTemplateId);
+      var makeCopy = personalPlanTemplateDoc.makeCopy(folderName + ' Coderbunker Resident Freelancer', userFolder);
+      
+      sheet.getRange(firstRowToProcess + i, 4).setValue(new Date());
+      
+      try {
+        userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
+      } catch (err) {
+        showErrorDialog("Setting Folder Owner Failed" + folderName, err);
+        log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+        sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
+        console.error("Onboarding - create folder" + err);
       }
+      
+    } else {  // already has a folder that has the same name in Google Drive
+      throw new Error('Already has a folder named ' + folderName + ' in Google Drive');
+      
+      continue;
     }
   }
 }
-
-       
-       /*var doc = DocumentApp.create(folderName + ' Coderbunker Resident Freelancer'),
-           docFile = DriveApp.getFileById( doc.getId() );
-
-       DriveApp.getFolderById(newFolderID).addFile( docFile );
-       DriveApp.getRootFolder().removeFile(docFile)
-       var getDocumentUrl = doc.getUrl();
-       var getFolderUrl = newFolder.getUrl();
-       
-       
-      /* var docID = '1CWqLtG9G7GgfMzSP110LSRmaBnZlMtX0D3kNOuPZr6g';
-       var baseDoc = DocumentApp.openById(docID);
-       var body = baseDoc.getBody();
-
-       var otherBody = DocumentApp.openByUrl(getDocumentUrl).getBody();
-       var totalElements = otherBody.getNumChildren();
-       for( var j = 0; j < totalElements; ++j ) {
-         var element = otherBody.getChild(j).copy();
-         var type = element.getType();
-         if( type == DocumentApp.ElementType.PARAGRAPH )
-           body.appendParagraph(element);
-         else if( type == DocumentApp.ElementType.TABLE )
-           body.appendTable(element);
-         else if( type == DocumentApp.ElementType.LIST_ITEM )
-           body.appendListItem(element);
-         else if( type == DocumentApp.ElementType.INLINE_IMAGE )
-           body.appendImage(element);
-
-    // add other element types as you want
-
-         else
-           throw new Error("According to the doc this type couldn't appear in the body: "+type);
-  }*/
-       
-       
-  
-

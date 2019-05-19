@@ -1,4 +1,39 @@
-function sendEmail() {
+function sendEmail(name, email) {
+  // sending onboarding email
+  var htmlTemplate = HtmlService.createTemplateFromFile("emailTemplate");
+  htmlTemplate.name = name;
+  htmlContent = htmlTemplate.evaluate().getContent();
+  var subject = name + "'s " + "Coderbunker Onboarding";
+
+  var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
+  var profileImage = DriveApp.getFileById(profileImageFileId);
+  var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
+  var addDriveImage = DriveApp.getFileById(addDriveImageId);
+
+  GmailApp.sendEmail(
+    email, 
+    subject, 
+    "", 
+    {
+      from: "services@coderbunker.com",
+      name: "Coderbunker Services", 
+      cc: "bizdev@coderbunker.com",
+      htmlBody: htmlContent, 
+      inlineImages: {
+        imageKey: profileImage.getAs(MimeType.PNG),
+        addDrive: addDriveImage.getAs(MimeType.PNG),
+      },
+    }
+  );
+
+  // save the email sending result
+  var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
+  var userRowIndex = searchRow(name, resultSheet);
+  var newUserRowRange = resultSheet.getRange(userRowIndex, 3); // get the "Email sent" cell
+  newUserRowRange.setValue(new Date());
+}
+
+function sendEmail2FailedOnes() {
   var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
   var profileImage = DriveApp.getFileById(profileImageFileId);
   var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
@@ -30,9 +65,9 @@ function sendEmail() {
         subject, 
         "", 
         {
-          "from":"services@coderbunker.com", 
-          "name": "Coderbunker Services", 
-          "cc":"bizdev@coderbunker.com",
+          from: "services@coderbunker.com", 
+          name: "Coderbunker Services", 
+          cc: "bizdev@coderbunker.com",
           htmlBody: htmlContent, 
           inlineImages: {
             imageKey: profileImage.getAs(MimeType.PNG), 
