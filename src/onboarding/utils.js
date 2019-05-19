@@ -24,7 +24,7 @@ function setProperty(propertyName, propertyValue, type) {
             PropertiesService.getDocumentProperties().setProperty(propertyName, propertyValue);
             break;
         default:
-            // TODO: log errors
+            console.error();
             break;
     } 
 }

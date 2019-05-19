@@ -20,8 +20,10 @@ function createFolder(folderName, ownerEmail) {
     try {
       userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
     } catch (err) {
-      showErrorDialog("Setting Folder Owner Failed", err);
-      console.error("[Onboarding - create folder] " + err);
+      showErrorDialog("Setting Folder Owner Failed" + folderName, err);
+      log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+      sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
+      console.error("Onboarding - create folder" + err);
     }
     
   } else {
@@ -77,7 +79,10 @@ function createFolder2FailedOnes(){
       try {
         userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
       } catch (err) {
-        logInfo2StackdriverLogging("[Onboarding - create folder] " + err);
+        showErrorDialog("Setting Folder Owner Failed" + folderName, err);
+        log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+        sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
+        console.error("Onboarding - create folder" + err);
       }
       
     } else {  // already has a folder that has the same name in Google Drive

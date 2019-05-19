@@ -35,7 +35,7 @@ function testCreateFolder() {
   var testUserName = "Andie - Test";
   var testUserEmail = "angdichu@gmail.com";
   
-  createFolderNew(testUserName, testUserEmail);
+  createFolder(testUserName, testUserEmail);
 }
 
 function testEmailAlias() {
@@ -49,6 +49,12 @@ function testShowErrorDialog() {
   var title = "Test Error";
   var errMsg = "This is a error message.Oh yes!";
   showErrorDialog(title, errMsg);
+}
+
+function testLog2File() {
+  var title = "Test Error";
+  var errMsg = "This is a error message.Oh yes!";
+  log2File(errMsg, title, "ERROR");
 }
 
 function testOnboarding() {
