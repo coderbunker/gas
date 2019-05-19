@@ -25,7 +25,7 @@ function testSearchFolder() {
 }
 
 function testSendEmail() {
-    var testUserName = "Test User - Andie";
+    var testUserName = "Andie - Test";
     var testUserEmail = "angdichu@gmail.com";
 
     sendEmail(testUserName, testUserEmail);
