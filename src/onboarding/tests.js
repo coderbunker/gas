@@ -33,7 +33,7 @@ function testGetProperty() {
 }
 
 function testSendEmail() {
-    var testUserName = "Andie - Test";
+    var testUserName = "Andie Testing Again";
     var testUserEmail = "angdichu@gmail.com";
 
     sendEmail(testUserName, testUserEmail);
