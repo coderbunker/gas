@@ -1,14 +1,21 @@
 function addNewRecord(name, email) {
   var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
+  if (searchRow(email, resultSheet)) {  // if there's already have a record of that person
+    return false;
+  }
   resultSheet.insertRowBefore(2);
   var newUserRowRange = resultSheet.getRange("A2:B2");
   newUserRowRange.setValues([ [name, email] ]);
+  return true;
 }
 
 function searchRow(keyword, sheet) {
   var textFinder = sheet.createTextFinder(keyword);
   var firstOccurRange = textFinder.findNext();
-  var rowIndex = firstOccurRange.getRowIndex();
+  var rowIndex = null;
+  if (firstOccurRange) {
+    rowIndex = firstOccurRange.getRowIndex();
+  }
   return rowIndex;
 }
 

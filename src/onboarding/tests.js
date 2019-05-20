@@ -5,7 +5,7 @@ function testAddNewRow() {
 }
 
 function testSearchRow() {
-  var keyword = "Test User - Andie";
+  var keyword = "angdichu@gmail.com";
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
   Logger.log(searchRow(keyword, sheet));
 }
@@ -68,7 +68,7 @@ function testLog2File() {
 function testOnboarding() {
   // mimic event data
   var namedValues = {};
-  namedValues["Full name"] = "Test User - Andie";
+  namedValues["Full name"] = "Andie Testing Again";
   namedValues["Email Address"] = "angdichu@gmail.com";
   var event = { namedValues: namedValues };
 

@@ -22,7 +22,7 @@ function sendEmail(name, email) {
       {
         from: "services@coderbunker.com",
         name: "Coderbunker Services", 
-        cc: "bizdev@coderbunker.com",
+        //cc: "bizdev@coderbunker.com",
         htmlBody: htmlContent, 
         inlineImages: {
           imageKey: profileImage.getAs(MimeType.PNG),
