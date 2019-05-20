@@ -1,6 +1,19 @@
 {
   "timeZone": "Asia/Hong_Kong",
   "dependencies": {
+    "enabledAdvancedServices": [{
+      "userSymbol": "AdminDirectory",
+      "serviceId": "admin",
+      "version": "directory_v1"
+    }, {
+      "userSymbol": "AdminReports",
+      "serviceId": "admin",
+      "version": "reports_v1"
+    }, {
+      "userSymbol": "AdminGroupsSettings",
+      "serviceId": "groupssettings",
+      "version": "v1"
+    }]
   },
   "exceptionLogging": "STACKDRIVER"
 }
