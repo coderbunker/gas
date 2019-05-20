@@ -5,7 +5,7 @@ function testAddNewRow() {
 }
 
 function testSearchRow() {
-  var keyword = "Test User - Andie";
+  var keyword = "angdichu@gmail.com";
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
   Logger.log(searchRow(keyword, sheet));
 }
@@ -24,8 +24,16 @@ function testSearchFolder() {
   }
 }
 
+function testGetProperty() {
+  Logger.log(getProperty("LOG_SPREADSHEET_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PROFILE_IMAGE_FILE_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("ADD_DRIVE_IMAGE_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PERSONAL_PARENT_FOLDER_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID", PROPERTIES_TYPE_SCRIPT));
+}
+
 function testSendEmail() {
-    var testUserName = "Test User - Andie";
+    var testUserName = "Andie - Test";
     var testUserEmail = "angdichu@gmail.com";
 
     sendEmail(testUserName, testUserEmail);
@@ -60,7 +68,7 @@ function testLog2File() {
 function testOnboarding() {
   // mimic event data
   var namedValues = {};
-  namedValues["Full name"] = "Test User - Andie";
+  namedValues["Full name"] = "Andie Testing Again";
   namedValues["Email Address"] = "angdichu@gmail.com";
   var event = { namedValues: namedValues };
 

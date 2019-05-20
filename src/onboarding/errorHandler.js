@@ -7,7 +7,7 @@ function handleError(title, err) {
 }
 
 function log2File(err, title, level) {
-  var logFileId = PropertiesService.getScriptProperties().getProperty("LOG_SPREADSHEET_ID");
+  var logFileId = getProperty("LOG_SPREADSHEET_ID", PROPERTIES_TYPE_SCRIPT);
   var logSpreadsheet = SpreadsheetApp.openById(logFileId);
   var sheet = logSpreadsheet.getSheetByName("Logs");
   
@@ -36,7 +36,7 @@ function sendErrorEmail(err, title) {
   GmailApp.sendEmail(
     recieverEmail, 
     emailSubject, 
-    "", 
+    "",  // leave the body of the email blank, because we are gonna use html templates (htmlBody)
     {
       from: "services@coderbunker.com", 
       name: "Coderbunker Services",
