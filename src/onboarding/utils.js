@@ -18,7 +18,7 @@ function setProperty(propertyName, propertyValue, type) {
             PropertiesService.getScriptProperties().setProperty(propertyName, propertyValue);
             break;
         case PROPERTIES_TYPE_USER:
-        PropertiesService.getUserProperties().setProperty(propertyName, propertyValue);
+            PropertiesService.getUserProperties().setProperty(propertyName, propertyValue);
             break;
         case PROPERTIES_TYPE_DOCUMENT: 
             PropertiesService.getDocumentProperties().setProperty(propertyName, propertyValue);
@@ -27,4 +27,18 @@ function setProperty(propertyName, propertyValue, type) {
             console.error();
             break;
     } 
+}
+
+function getProperty(propertyName, type) {
+  switch (type) {
+    case PROPERTIES_TYPE_SCRIPT: 
+      return PropertiesService.getScriptProperties().getProperty(propertyName);
+    case PROPERTIES_TYPE_USER:
+      return PropertiesService.getUserProperties().getProperty(propertyName);
+    case PROPERTIES_TYPE_DOCUMENT: 
+      return PropertiesService.getDocumentProperties().getProperty(propertyName);
+    default:
+      console.error();
+      break;
+  }
 }

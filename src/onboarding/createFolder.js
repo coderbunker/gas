@@ -1,6 +1,6 @@
 function createFolder(folderName, ownerEmail) {
-  var parentFolderId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PARENT_FOLDER_ID");
-  var personalPlanTemplateId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID");
+  var parentFolderId = getProperty("PERSONAL_PARENT_FOLDER_ID", PROPERTIES_TYPE_SCRIPT);
+  var personalPlanTemplateId = getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID", PROPERTIES_TYPE_SCRIPT);
   
   var parentFolder = DriveApp.getFolderById(parentFolderId);
   var subFolders = parentFolder.getFolders();
@@ -40,8 +40,8 @@ function createFolder(folderName, ownerEmail) {
 
 //Create folder if does not exists only
 function createFolder2FailedOnes(){
-  var parentFolderId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PARENT_FOLDER_ID");
-  var personalPlanTemplateId = PropertiesService.getScriptProperties().getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID");
+  var parentFolderId = getProperty("PERSONAL_PARENT_FOLDER_ID", PROPERTIES_TYPE_SCRIPT);
+  var personalPlanTemplateId = getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID", PROPERTIES_TYPE_SCRIPT);
   
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = spreadsheet.getSheetByName("Emails");

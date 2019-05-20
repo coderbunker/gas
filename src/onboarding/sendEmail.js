@@ -10,15 +10,15 @@ function sendEmail(name, email) {
     htmlContent = htmlTemplate.evaluate().getContent();
     var subject = name + "'s " + "Coderbunker Onboarding";
     
-    var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
+    var profileImageFileId = getProperty("PROFILE_IMAGE_FILE_ID", PROPERTIES_TYPE_SCRIPT);
     var profileImage = DriveApp.getFileById(profileImageFileId);
-    var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
+    var addDriveImageId = getProperty("ADD_DRIVE_IMAGE_ID", PROPERTIES_TYPE_SCRIPT);
     var addDriveImage = DriveApp.getFileById(addDriveImageId);
     
     GmailApp.sendEmail(
       email, 
       subject, 
-      "", 
+      "",  // leave the body of the email blank, because we are gonna use html templates (htmlBody)
       {
         from: "services@coderbunker.com",
         name: "Coderbunker Services", 
@@ -38,9 +38,9 @@ function sendEmail(name, email) {
 }
 
 function sendEmail2FailedOnes() {
-  var profileImageFileId = PropertiesService.getScriptProperties().getProperty("PROFILE_IMAGE_FILE_ID");
+  var profileImageFileId = getProperty("PROFILE_IMAGE_FILE_ID", PROPERTIES_TYPE_SCRIPT);
   var profileImage = DriveApp.getFileById(profileImageFileId);
-  var addDriveImageId = PropertiesService.getScriptProperties().getProperty("ADD_DRIVE_IMAGE_ID");
+  var addDriveImageId = getProperty("ADD_DRIVE_IMAGE_ID", PROPERTIES_TYPE_SCRIPT);
   var addDriveImage = DriveApp.getFileById(addDriveImageId);
   
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
@@ -67,7 +67,7 @@ function sendEmail2FailedOnes() {
       GmailApp.sendEmail(
         email, 
         subject, 
-        "", 
+        "",  // leave the body of the email blank, because we are gonna use html templates (htmlBody)
         {
           from: "services@coderbunker.com", 
           name: "Coderbunker Services", 

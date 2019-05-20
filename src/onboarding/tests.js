@@ -24,6 +24,14 @@ function testSearchFolder() {
   }
 }
 
+function testGetProperty() {
+  Logger.log(getProperty("LOG_SPREADSHEET_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PROFILE_IMAGE_FILE_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("ADD_DRIVE_IMAGE_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PERSONAL_PARENT_FOLDER_ID", PROPERTIES_TYPE_SCRIPT));
+  Logger.log(getProperty("PERSONAL_PLAN_TEMPLATE_DOC_ID", PROPERTIES_TYPE_SCRIPT));
+}
+
 function testSendEmail() {
     var testUserName = "Andie - Test";
     var testUserEmail = "angdichu@gmail.com";
