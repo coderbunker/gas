@@ -15,6 +15,10 @@ function add2CommunityGroup(user) {
   }
 }
 
+function add2CommunityGroup2FailedOnes() {
+  // TODO: finish this!
+}
+
 function addMember2Group(user, group, role) {
   var member = {
     email: user,
