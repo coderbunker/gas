@@ -5,9 +5,10 @@ function onboarding(e) {
   };
   
   addNewRecord(submitUser.name, submitUser.email);
+  add2CommunityGroup(submitUser.email);
   sendEmail(submitUser.name, submitUser.email);
   createFolder(submitUser.name, submitUser.email);
 
-  // log to 
+  // log to Stackdriver logging system
   console.log('[Onboarding - Add from Form] name: ' + submitUser.name + ' ; email: ' + submitUser.email);  
 }

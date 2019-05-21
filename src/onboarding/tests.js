@@ -75,6 +75,39 @@ function testOnboarding() {
   onboarding(event);
 }
 
-function testAdminDirectory() {
+function testAdminDirectoryAPI() {
+  var pageToken;
+  var page;
+  do {
+    page = AdminDirectory.Groups.list({
+      domain: DOMAIN,
+      maxResults: 100,
+      pageToken: pageToken
+    });
+    var groups = page.groups;
+    if (groups) {
+      for (var i = 0; i < groups.length; i++) {
+        var group = groups[i];
+        Logger.log('%s (%s)', group.name, group.email);
+      }
+    } else {
+      Logger.log('No groups found.');
+    }
+    pageToken = page.nextPageToken;
+  } while (pageToken);
+}
+
+function testAddMember2Group() {
+  var member = "angdichu@gmail.com";
+  var group = "internaldev.test";
+  var groupEmail = group + "@" + DOMAIN;
   
+  var memberResrc = addMember2Group(member, groupEmail, GROUP_ROLE_MEMBER);
+  
+  Logger.log(memberResrc);
+}
+
+function testAdd2CommunityGroup() {
+  var user = "angdichu@gmail.com";
+  add2CommunityGroup(user);
 }
