@@ -40,7 +40,7 @@ function testSendEmail() {
 }
 
 function testCreateFolder() {
-  var testUserName = "Andie - Test";
+  var testUserName = "Andie Testing Again";
   var testUserEmail = "angdichu@gmail.com";
   
   createFolder(testUserName, testUserEmail);
