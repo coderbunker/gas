@@ -74,3 +74,7 @@ function testOnboarding() {
 
   onboarding(event);
 }
+
+function testAdminDirectory() {
+  
+}

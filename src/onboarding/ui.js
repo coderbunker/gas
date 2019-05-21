@@ -17,6 +17,11 @@ function showErrorDialog(title, errMsg) {
   var content = template.evaluate()
                         .setWidth(300)
                         .setHeight(100);
-
-  SpreadsheetApp.getUi().showModalDialog(content, title);
+  try {
+    SpreadsheetApp.getUi().showModalDialog(content, title);
+  } catch (err) {
+    log2File(err, "showErrorDialog ERROR: ", LOG_LEVEL_ERROR);
+    console.error("showErrorDialog ERROR: ", err);
+  }
+  
 }

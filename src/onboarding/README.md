@@ -12,7 +12,11 @@
 
 ## Usage
 
-From a clean start: once you created the Coderbunker Onboarding Categorization spreadsheet and its form, you need to run `onCreateScript()` function at the very beginning to set all the properties and triggers. If you've already ran the function, you don't need to run it again during the entire life of the script. 
+From a clean start: 
+
+1. once you created the Coderbunker Onboarding Categorization spreadsheet and its form, you need to run `onCreateScript()` function at the very beginning to set all the properties and triggers. If you've already ran the function, you don't need to run it again during the entire life of the script. 
+
+2. turn on the advanced Google services in the script editor's menu `Resources -> Advanced Google services`. Turn on `Admin Directory API` and `Groups Settings API`.
 
 ## Reference
 

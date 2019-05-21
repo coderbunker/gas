@@ -29,7 +29,7 @@ function createFolder(folderName, ownerEmail) {
         userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
       } catch (err) {
         showErrorDialog("Setting Folder Owner Failed" + folderName, err);
-        log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+        log2File(err, "Setting Folder Owner Failed: " + folderName, LOG_LEVEL_ERROR);
         sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
         console.error("Onboarding - create folder" + err);
       }
@@ -90,7 +90,7 @@ function createFolder2FailedOnes(){
         userFolder.setOwner(ownerEmail);  // TODO: cannot set a different domain user as owner!
       } catch (err) {
         showErrorDialog("Setting Folder Owner Failed" + folderName, err);
-        log2File(err, "Setting Folder Owner Failed: " + folderName, "ERROR");
+        log2File(err, "Setting Folder Owner Failed: " + folderName, LOG_LEVEL_ERROR);
         sendErrorEmail(err, "Setting Folder Owner Failed: " + folderName);
         console.error("Onboarding - create folder" + err);
       }
