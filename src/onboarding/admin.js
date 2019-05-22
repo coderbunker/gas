@@ -17,6 +17,27 @@ function add2CommunityGroup(user) {
 
 function add2CommunityGroup2FailedOnes() {
   // TODO: finish this!
+  var group = getProperty("GROUP_MEMBER", PROPERTIES_TYPE_SCRIPT);
+  var groupEmail = group + "@" + DOMAIN;
+  
+  var resultSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Emails");
+  var totalRange = resultSheet.getDataRange();
+  var lastRowId = totalRange.getLastRow();
+  var range = resultSheet.getRange(2, 1, lastRowId-1, 5);
+  
+  var dataArr = range.getValues();
+  Logger.log(dataArr.length);
+  for (var i = 0; i < dataArr.length; i++) {
+    var row = dataArr[i];
+    if(!row[4]) {    // Group added column is empty
+      var user = row[1];
+      var member = addMember2Group(user, groupEmail, GROUP_ROLE_MEMBER);
+      
+      if (member) {
+        resultSheet.getRange(i+2, 5).setValue(new Date());
+      }
+    }
+  }
 }
 
 function addMember2Group(user, group, role) {
