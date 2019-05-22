@@ -16,7 +16,6 @@ function add2CommunityGroup(user) {
 }
 
 function add2CommunityGroup2FailedOnes() {
-  // TODO: finish this!
   var group = getProperty("GROUP_MEMBER", PROPERTIES_TYPE_SCRIPT);
   var groupEmail = group + "@" + DOMAIN;
   
