@@ -26,21 +26,26 @@ function log2File(err, title, level) {
 }
 
 function sendErrorEmail(err, title) {
-  var recieverEmail = Session.getActiveUser().getEmail();
-  var emailSubject = "Error Occured: " + title;
-  var htmlTemplate = HtmlService.createTemplateFromFile('errorEmailTemplate');
-  htmlTemplate.scriptName = "Onboarding";
-  htmlTemplate.err = err;
-  var htmlContent = htmlTemplate.evaluate().getContent();
-
-  GmailApp.sendEmail(
-    recieverEmail, 
-    emailSubject, 
-    "",  // leave the body of the email blank, because we are gonna use html templates (htmlBody)
-    {
-      from: "services@coderbunker.com", 
-      name: "Coderbunker Services",
-      htmlBody: htmlContent
-    }
-  );
+  try {
+    var recieverEmail = Session.getActiveUser().getEmail();
+    var emailSubject = "Error Occured: " + title;
+    var htmlTemplate = HtmlService.createTemplateFromFile('errorEmailTemplate');
+    htmlTemplate.scriptName = "Onboarding";
+    htmlTemplate.err = err;
+    var htmlContent = htmlTemplate.evaluate().getContent();
+    
+    GmailApp.sendEmail(
+      recieverEmail, 
+      emailSubject, 
+      "",  // leave the body of the email blank, because we are gonna use html templates (htmlBody)
+      {
+        from: "services@coderbunker.com", 
+        name: "Coderbunker Services",
+        htmlBody: htmlContent
+      }
+    );
+  } catch (err) {
+    log2File(err, "sendErrorEmail ERROR: ", LOG_LEVEL_ERROR);
+    console.error("sendErrorEmail ERROR: ", err);
+  }
 }
