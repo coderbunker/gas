@@ -12,6 +12,8 @@ function add2CommunityGroup(user) {
     if (member) {
       newUserRowRange.setValue(new Date());
     }
+  } else {
+    console.log('Add Member "' + user + '"' + ' to Group "' + group +'" as a ' + role + ': Record existed in the table');
   }
 }
 

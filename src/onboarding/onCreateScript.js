@@ -19,10 +19,18 @@ function onCreateScript() {
  * create a trigger that whenever a user form a data, it triggers onboarding function
  */
 function createTrigger() {
-    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   
-    ScriptApp.newTrigger('onboarding')
+  var user = Session.getActiveUser();
+  var userEmail = user.getEmail();
+  
+  if (userEmail == "angdi.chu@coderbunker.com") {
+    ScriptApp.newTrigger("onboarding")
       .forSpreadsheet(spreadsheet)
       .onFormSubmit()
       .create();
+  } else {
+    console.error("You don't have permission to create an onboarding trigger! Please contact with Andie (angdi.chu@coderbunker.com). ", new Error());
+  }
+  
 }

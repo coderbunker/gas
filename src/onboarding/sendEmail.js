@@ -33,6 +33,8 @@ function sendEmail(name, email) {
     
     // save the email sending result
     newUserRowRange.setValue(new Date());
+  } else {
+    console.log('Send onboarding Email to "' + user + '"' + ': Record existed in the table');
   }
 
 }
