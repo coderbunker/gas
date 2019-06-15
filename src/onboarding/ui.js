@@ -1,7 +1,7 @@
 function onOpen() {
   var spreadsheet = SpreadsheetApp.getActive();
   var menuItems = [
-    { name: 'Set up script (ONLY ONCE)', functionName: 'onCreateScript' },
+    //{ name: 'Set up script (ONLY ONCE)', functionName: 'onCreateScript' },  // TODO: hide the item automatically
     { name: 'Add to Google groups', functionName: 'add2CommunityGroup2FailedOnes' },
     { name: 'Send onboarding Email', functionName: 'sendEmail2FailedOnes' },
     { name: 'Create folder', functionName: 'createFolder2FailedOnes' }, 

@@ -49,3 +49,16 @@ function getProperty(propertyName, type) {
       break;
   }
 }
+
+function deleteAllTriggers() {
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    console.log(triggers[i])
+    ScriptApp.deleteTrigger(triggers[i]);
+  }
+}
+
+function selectedTriggers() {
+  var triggers = ScriptApp.getProjectTriggers();
+  console.log(triggers);
+}
