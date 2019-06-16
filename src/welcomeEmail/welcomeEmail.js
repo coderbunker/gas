@@ -13,14 +13,6 @@ function sendEmail(){
     htmlTemplate.name = name;
     var htmlContent = htmlTemplate.evaluate().getContent();
     var subject = "Welcome " + name + "!";
- 
-      var LogoUrl = "http://secure.meetupstatic.com/photos/event/d/3/6/f/600_451134127.jpeg";
-      var LogoBlob = UrlFetchApp
-                      .fetch(LogoUrl)
-                      .getBlob()
-                      .setName("LogoBlob");
-      
-   
       
     GmailApp.sendEmail(
       emailAddress, 
@@ -29,13 +21,8 @@ function sendEmail(){
      {
         from: "services@coderbunker.com",
         name: "Welcome", 
-        //cc: "bizdev@coderbunker.com",
-        htmlBody: htmlContent,
-        inlineImages:
-    {
-      Logo: LogoBlob,
-      
-    }
+        cc: "am.freelancer@coderbunker.com",
+        htmlBody: htmlContent
       }
     );
     
