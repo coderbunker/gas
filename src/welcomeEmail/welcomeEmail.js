@@ -1,11 +1,5 @@
 function sendEmail(){
-  //trigger .onChange()
-  var sheet = SpreadsheetApp.getActiveSpreadsheet();
-  ScriptApp.newTrigger("sendEmail")
-      .forSpreadsheet(sheet)
-      .onChange()
-      .create();
-  
+
   var dataSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("coderbunker join in button");
   
   for (var i = 2; i <= dataSheet.getLastRow(); i++){
