@@ -1,4 +1,5 @@
 function sendEmail(){
+
   var dataSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("coderbunker join in button");
   
   for (var i = 2; i <= dataSheet.getLastRow(); i++){
@@ -14,17 +15,17 @@ function sendEmail(){
     var htmlContent = htmlTemplate.evaluate().getContent();
     var subject = "Welcome " + name + "!";
       
-    GmailApp.sendEmail(
-      emailAddress, 
-      subject, 
-      "",
-     {
-        from: "services@coderbunker.com",
-        name: "Welcome", 
-        cc: "am.freelancer@coderbunker.com",
-        htmlBody: htmlContent
-      }
-    );
+      GmailApp.sendEmail(
+        emailAddress, 
+        subject, 
+        "",
+        {
+          from: "services@coderbunker.com",
+          name: "CoderBunker", 
+          cc: "am.freelancer@coderbunker.com",
+          htmlBody: htmlContent
+        }
+      );
     
     // save the email sending result
     dataSheet.getRange(i, 5).setValue(new Date());
