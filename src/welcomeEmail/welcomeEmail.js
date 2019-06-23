@@ -17,6 +17,7 @@ function sendEmail(){
               var subjectDuplication = "Hello " + name + "!";
               var htmlContentDuplicate = duplicateRegistration.evaluate().getContent();
               
+              try{
               GmailApp.sendEmail(
                 emailAddress, 
                 subjectDuplication, 
@@ -28,7 +29,13 @@ function sendEmail(){
                 }
               );
               dataSheet.getRange(i, 5).setValue("Duplication");
-              break;
+                break;
+              }
+              
+              catch(error){
+                dataSheet.getRange(i, 5).setValue("Error");
+              }
+              
             }
             
             else if (j == i - 1){ //go through all the previous record, and no duplication, send welcome email and cc. 
@@ -37,7 +44,8 @@ function sendEmail(){
             var subject = "Welcome " + name + "!";
             var htmlContent = htmlTemplate.evaluate().getContent();
           
-            GmailApp.sendEmail(
+              try{
+              GmailApp.sendEmail(
                 emailAddress, 
                 subject, 
                 "",
@@ -47,8 +55,14 @@ function sendEmail(){
                 cc: "am.freelancer@coderbunker.com",
                 htmlBody: htmlContent
                 }
-            );
-            dataSheet.getRange(i, 5).setValue(new Date());
+              );
+              dataSheet.getRange(i, 5).setValue(new Date());
+              }
+              
+              catch(error){
+              dataSheet.getRange(i, 5).setValue("Error");
+              }
+                       
             } 
         } 
     } 
