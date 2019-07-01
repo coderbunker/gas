@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<h2>Coderbunker Timesheet</h2>
+
+<br>
+<label for="full name">Enter your full name:</label>
+<form onsubmit="sendText(event)">
+ <input type="text" name = "full name" placeholder="Insert Full Name"/> 
+ <input type = "submit" value ="submit"/>
+</form>
+<br>
+<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" type="text/css">
+
+<!--- User inputs start time, both date and time--->
+<form action="/action_page.php">
+  Select the date you want to input:
+  <input type="date" name="work date">
+</form>
+
+<br>
+<form action="/action_page.php" onsubmit="sendAll(event)"> 
+  Select your starting time:
+  <input type="time" name="start time">
+  <input type = "submit" value ="submit"/>
+</form> 
+
+<br>
+
+<button align="left" onclick="getTime()" type = "submit">Get Time</button> <p align="right" id="time"></p>
+
+<!--- Dropdown Menu for Project Category--->
+
+<body>
+
+<div class="dropdown">
+<select id="list">
+    <option value="accountmanagement">Account Management</option>
+    <option value="administrative">Administrative</option>
+    <option value="automation">Automation</option>
+    <option value="businessdevelopment">Business Development</option>
+    <option value="coderbunker.com">coderbunker.com</option>
+    <option value="communitydevelopment">Community Development</option>
+    <option value="csrplatforms">CSR Platform</option>
+    <option value="finances">Finances</option>
+    <option value="fundraising">Fund Raising</option>
+    <option value="inquiries">Inquiries</option>
+    <option value="matching">Matching</option>
+    <option value="paidmentoring">Paid Mentoring</option>
+    <option value="project">Project</option>
+    <option value="proposalpitchmaterial">Proposals & Pitch material</option>
+    <option value="summercamp">Summer Camp</option>
+    <option value="systemsdevelopment">Systems Development</option>
+    <option value="trainingmentoring">Training & Mentoring</option>
+    <option value="tellurio">Tellurio</option>
+ var list = $('#list').find(":selected").text(); 
+</select>
+</div>
+
+<br>
+<label for="project link submit">Enter your project link:</label>
+<br>
+<input id = "project link input"type="text" placeholder="Insert Project Link">
+    <button id="project link submit" type="submit">Submit</button>
+
+<form>
+<br>
+<label for="activity description">If you don't have your link, please enter manually:</label>
+<input id = 'activity description'type="text" placeholder="Insert Activity Description">
+</form>
+<br><br>
+<form id="sheets" name="sheets" class="form_body">
+<div style="text-align:center;">
+<input onClick = "sendText(event)"type="button" id="submit" name="submit" class="form_button" value="Confirm">
+</div>
+</form>
+
+<br>
+<div style="text-align:center;"><img src="https://assets.codebar.io/b//uploads/sponsor/avatar/477/600_451134127.jpeg" alt="coderbunker.png">
+</div>
+
+<style>
+input[type=text] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+input[type=button] {
+    padding:5px 15px;
+    background:#4287f5;
+    color:#FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+button[type=submit] {
+    padding:5px 15px; 
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+h2 {
+font-family:Titillium Web;
+}
+label {
+font-family:Titillium Web;
+}
+img {
+width:100px; 
+}
+</style>
+
+<script>
+  function sendText(e) {
+  e.preventDefault();
+  var data1 = {
+  enterFullName: e.target['full name'].value
+  }
+
+  google.script.run
+  .withSuccessHandler(function(response) {
+  console.log(response);
+  })
+  .sendText(data1);
+  }
+</script>
+
+<!---
+<script> function sendAll(e) {
+e.preventDefault();
+var datas = {
+enterFullName: e.target['full name'].value,
+enterDate:
+enterStartTime: e.target['']
+--->
+
+<script> function getTime() {
+  var d = new Date();
+  var n = d.toLocaleTimeString();
+  document.getElementById("time").innerHTML = n;
+  return n;
+}
+</script>
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function dropDownMenu() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</body>
+</html> 
