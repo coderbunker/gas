@@ -20,7 +20,7 @@
 </form>
 
 <br>
-<form action="/action_page.php" onsubmit="sendAll(event)"> 
+<form action="/action_page.php"> 
   Select your starting time:
   <input type="time" name="start time">
   <input type = "submit" value ="submit"/>
@@ -28,52 +28,51 @@
 
 <br>
 
-<button align="left" onclick="getTime()" type = "submit">Get Time</button> <p align="right" id="time"></p>
+<button align="left" onclick="getTime()" name = "end time" type = "submit">Get Time</button> <p align="right" id="time"></p>
 
 <!--- Dropdown Menu for Project Category--->
 
 <body>
 
 <div class="dropdown">
-<select id="list">
-    <option value="accountmanagement">Account Management</option>
+<select id="list" name = "project category">
+    <option value="account management">Account Management</option>
     <option value="administrative">Administrative</option>
     <option value="automation">Automation</option>
-    <option value="businessdevelopment">Business Development</option>
+    <option value="business development">Business Development</option>
     <option value="coderbunker.com">coderbunker.com</option>
-    <option value="communitydevelopment">Community Development</option>
-    <option value="csrplatforms">CSR Platform</option>
+    <option value="community development">Community Development</option>
+    <option value="csr platforms">CSR Platform</option>
     <option value="finances">Finances</option>
     <option value="fundraising">Fund Raising</option>
     <option value="inquiries">Inquiries</option>
     <option value="matching">Matching</option>
-    <option value="paidmentoring">Paid Mentoring</option>
+    <option value="paid mentoring">Paid Mentoring</option>
     <option value="project">Project</option>
-    <option value="proposalpitchmaterial">Proposals & Pitch material</option>
-    <option value="summercamp">Summer Camp</option>
-    <option value="systemsdevelopment">Systems Development</option>
-    <option value="trainingmentoring">Training & Mentoring</option>
+    <option value="proposal & pitch material">Proposals & Pitch material</option>
+    <option value="summer camp">Summer Camp</option>
+    <option value="systems development">Systems Development</option>
+    <option value="training & mentoring">Training & Mentoring</option>
     <option value="tellurio">Tellurio</option>
  var list = $('#list').find(":selected").text(); 
 </select>
 </div>
 
 <br>
-<label for="project link submit">Enter your project link:</label>
+<label for="project link">Enter your project link:</label>
 <br>
-<input id = "project link input"type="text" placeholder="Insert Project Link">
-    <button id="project link submit" type="submit">Submit</button>
-
+<input name="project link" type="text" placeholder="Insert Project Link">
+	<button onclick="getTitle()">Confirm</button>
+    
 <form>
 <br>
 <label for="activity description">If you don't have your link, please enter manually:</label>
-<input id = 'activity description'type="text" placeholder="Insert Activity Description">
+<input name = "project activity" type="text" placeholder="Insert Activity Description">
 </form>
+
 <br><br>
-<form id="sheets" name="sheets" class="form_body">
-<div style="text-align:center;">
-<input onClick = "sendText(event)"type="button" id="submit" name="submit" class="form_button" value="Confirm">
-</div>
+<form onsubmit="sendAll(event)">
+ <input type = "submit" value ="submit" placeholder="Confirm"/>
 </form>
 
 <br>
@@ -143,14 +142,27 @@ width:100px;
   }
 </script>
 
-<!---
+
 <script> function sendAll(e) {
 e.preventDefault();
 var datas = {
 enterFullName: e.target['full name'].value,
-enterDate:
-enterStartTime: e.target['']
---->
+enterDate: e.target['work date'].value,
+enterStartTime: e.target['start time'].value,
+enterEndTime: e.target['end time'].value,
+enterProject: e.target['project category'].value,
+enterActivity: e.target['project activity'].value,
+enterLink: e.target['project link'].value
+}
+
+google.script.run
+.withSuccessHandler(function(response) {
+console.log(response);
+})
+.sendAll(datas);
+}
+</script>
+
 
 <script> function getTime() {
   var d = new Date();
@@ -181,5 +193,49 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+
+<script> function searchGoogleGithub('project link') {
+  var S = 'project link';
+  if (S.includes("google") === true) {
+    if (S.includes("spreadsheets" === true) {
+      var spreadsheetId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
+      var openspreadsheet = SpreadsheetApp.openById(spreadsheetId);
+      var spreadsheetName = Logger.log(openspreadsheet.getName());
+      return spreadsheetName;
+      }
+    else if (S.includes("document" === true) {
+      var documentId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
+      var opendocument = DocumentApp.openById(documentId);
+      var documentName = Logger.log(opendocument.getName());
+      return documentName;
+      }
+    else if (S.includes("slides" === true) {
+      var slidesId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
+      var openslides = SlidesApp.openById(slidesId);
+      var slidesName = Logger.log(openslides.getName());
+      return slidesName; 
+    }
+    else () {
+      return "Error!";
+    }
+    }
+  else if (S.includes("github") === true) { 
+   
+  }
+  else () {
+	// Brandon's code
+  }
+  }
+</script>
+
+<script>
+function getTitle() {
+ var doc = Jsoup.connect('project link').get();
+ var title = doc.title();
+  return title;
+}</script>
+
+</body>
 </body>
 </html> 
