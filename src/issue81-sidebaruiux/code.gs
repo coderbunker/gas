@@ -21,8 +21,10 @@ function showProject() {
       .showSidebar(html);
 }
 
-function sendText(data1) {
-var sheet = SpreadsheetApp.openById('1x2xl82HuI5j8w1XYfmrjLOvsucFEIvnjCl8KFu2nkuk').getActiveSheet();
-sheet.appendRow([data1.enterFullName]);
+function sendAll(datas) {
+  var sheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getActiveSheet();
+  var duration = null;
+  var total = null;
+  sheet.appendRow([ datas.enterDate, datas.enterStartTime, datas.enterEndTime, duration, total, datas.enterFullName, datas.enterCategory, datas.enterActivity, datas.enterLink]);
   return 'success!';
 }
