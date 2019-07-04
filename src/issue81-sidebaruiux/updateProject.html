@@ -1,85 +1,14 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
 
-<body>
-<h2>Coderbunker Timesheet</h2>
+  <h2>Coderbunker Timesheet</h2>
 
-<br>
-<label for="full name">Enter your full name:</label>
-<form onsubmit="sendText(event)">
- <input type="text" name = "full name" placeholder="Insert Full Name"/> 
- <input type = "submit" value ="submit"/>
-</form>
-<br>
-<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" type="text/css">
-
-<!--- User inputs start time, both date and time--->
-<form action="/action_page.php">
-  Select the date you want to input:
-  <input type="date" name="work date">
-</form>
-
-<br>
-<form action="/action_page.php"> 
-  Select your starting time:
-  <input type="time" name="start time">
-  <input type = "submit" value ="submit"/>
-</form> 
-
-<br>
-
-<button align="left" onclick="getTime()" name = "end time" type = "submit">Get Time</button> <p align="right" id="time"></p>
-
-<!--- Dropdown Menu for Project Category--->
-
-<body>
-
-<div class="dropdown">
-<select id="list" name = "project category">
-    <option value="account management">Account Management</option>
-    <option value="administrative">Administrative</option>
-    <option value="automation">Automation</option>
-    <option value="business development">Business Development</option>
-    <option value="coderbunker.com">coderbunker.com</option>
-    <option value="community development">Community Development</option>
-    <option value="csr platforms">CSR Platform</option>
-    <option value="finances">Finances</option>
-    <option value="fundraising">Fund Raising</option>
-    <option value="inquiries">Inquiries</option>
-    <option value="matching">Matching</option>
-    <option value="paid mentoring">Paid Mentoring</option>
-    <option value="project">Project</option>
-    <option value="proposal & pitch material">Proposals & Pitch material</option>
-    <option value="summer camp">Summer Camp</option>
-    <option value="systems development">Systems Development</option>
-    <option value="training & mentoring">Training & Mentoring</option>
-    <option value="tellurio">Tellurio</option>
- var list = $('#list').find(":selected").text(); 
-</select>
-</div>
-
-<br>
-<label for="project link">Enter your project link:</label>
-<br>
-<input name="project link" type="text" placeholder="Insert Project Link">
-	<button onclick="searchGoogleGithub()">Confirm</button>
-    
-<form>
-<br>
-<label for="activity description">If you don't have your link, please enter manually:</label>
-<input name = "project activity" type="text" placeholder="Insert Activity Description">
-</form>
-
-<br><br>
-<form onsubmit="sendAll(event)">
- <input type = "submit" value ="submit" placeholder="Confirm"/>
-</form>
-
-<br>
-<div style="text-align:center;"><img src="https://assets.codebar.io/b//uploads/sponsor/avatar/477/600_451134127.jpeg" alt="coderbunker.png">
-</div>
-
-<style>
+  <br>
+  <style>
 input[type=text] {
     padding:5px; 
     border:2px solid #ccc; 
@@ -127,115 +56,74 @@ width:100px;
 }
 </style>
 
-<script>
-  function sendText(e) {
-  e.preventDefault();
-  var data1 = {
-  enterFullName: e.target['full name'].value
-  }
+   <form onsubmit = "sendAll (event)">
+    <br>
+    <input type = "text" name = "full name" placeholder = "Insert full name"/>
+    <br>
+    <label for = "work date">Enter your work date:</label>    
+    <input type="date" name="work date">
+    <br>
+    <label for = "start time">Enter your start time:</label>
+    <input type = "time" name = "start time" />
+    <label for = "end time">Enter your end time:</label>
+    <input type = "time" name = "end time" />
+    <br>
+    <div class="dropdown">
+    <select id="list" name = "project category">
+    <option value="Account Management">Account Management</option>
+    <option value="Administrative">Administrative</option>
+    <option value="Automation">Automation</option>
+    <option value="Business Development">Business Development</option>
+    <option value="coderbunker.com">coderbunker.com</option>
+    <option value="Community Development">Community Development</option>
+    <option value="CSR Platforms">CSR Platform</option>
+    <option value="Finances">Finances</option>
+    <option value="Fundraising">Fund Raising</option>
+    <option value="Inquiries">Inquiries</option>
+    <option value="Matching">Matching</option>
+    <option value="Paid Mentoring">Paid Mentoring</option>
+    <option value="Project">Project</option>
+    <option value="Proposal & Pitch Material">Proposals & Pitch material</option>
+    <option value="Summer Camp">Summer Camp</option>
+    <option value="Systems Development">Systems Development</option>
+    <option value="Training & Mentoring">Training & Mentoring</option>
+    <option value="Tellurio">Tellurio</option>
+    var list = $('#list').find(":selected").text(); 
+    </select>
+    </div>
+    <br>
+    <label for = "project link">Enter the link for your work:</label><br>
+    <input type = "text" name = "project link" placeholder = "Insert project link"/><br>
+    <label for = "project activity">Describe your work:</label><br>
+    <input type = "text" name = "project activity" placeholder = "Insert project activity"/><br>
+    <br>
+    <div style="text-align:center">
+    <input align = "center" type = "submit" value = "submit" />
+    </div>
+</form>
 
-  google.script.run
-  .withSuccessHandler(function(response) {
-  console.log(response);
-  })
-  .sendText(data1);
-  }
-</script>
-
+<div style="text-align:center;"><img src="https://assets.codebar.io/b//uploads/sponsor/avatar/477/600_451134127.jpeg" alt="coderbunker.png">
+</div>
 
 <script> function sendAll(e) {
-e.preventDefault();
-var datas = {
-enterFullName: e.target['full name'].value,
-enterDate: e.target['work date'].value,
-enterStartTime: e.target['start time'].value,
-enterEndTime: e.target['end time'].value,
-enterProject: e.target['project category'].value,
-enterActivity: e.target['project activity'].value,
-enterLink: e.target['project link'].value
-}
-
-google.script.run
-.withSuccessHandler(function(response) {
-console.log(response);
-})
-.sendAll(datas);
-}
-</script>
-
-
-<script> function getTime() {
-  var d = new Date();
-  var n = d.toLocaleTimeString();
-  document.getElementById("time").innerHTML = n;
-  return n;
-}
-</script>
-
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function dropDownMenu() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
+    e.preventDefault();
+    var datas = {
+        enterDate: e.target['work date'].value,   
+        enterStartTime: e.target['start time'].value,
+        enterEndTime: e.target['end time'].value,
+        enterFullName: e.target['full name'].value,
+        enterCategory: e.target['project category'].value,
+        enterActivity: e.target['project activity'].value,
+        enterLink: e.target['project link'].value
     }
-  }
-}
-</script>
-
-
-<script> function searchGoogleGithub('project link') {
-  var S = 'project link';
-  if (S.includes("google") === true) {
-    if (S.includes("spreadsheets" === true) {
-      var spreadsheetId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
-      var openspreadsheet = SpreadsheetApp.openById(spreadsheetId);
-      var spreadsheetName = Logger.log(openspreadsheet.getName());
-      return spreadsheetName;
-      }
-    else if (S.includes("document" === true) {
-      var documentId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
-      var opendocument = DocumentApp.openById(documentId);
-      var documentName = Logger.log(opendocument.getName());
-      return documentName;
-      }
-    else if (S.includes("slides" === true) {
-      var slidesId = S.substring(S.lastindexOf("/d/")+1,S.indexOf("/edit"));
-      var openslides = SlidesApp.openById(slidesId);
-      var slidesName = Logger.log(openslides.getName());
-      return slidesName; 
+    
+    google.script.run
+    .withSuccessHandler(function(response) {
+    console.log(response);
+    })
+    .sendAll(datas);
     }
-    else () {
-      return "Error!";
-    }
-    }
-  else if (S.includes("github") === true) { 
-   
-  }
-  else () {
-	// Brandon's code
-  }
-  }
-</script>
+    </script>
 
-<script>
-function getTitle() {
- var doc = Jsoup.connect('project link').get();
- var title = doc.title();
-  return title;
-}</script>
-
-</body>
-</body>
-</html> 
+  </body>
+</html>
