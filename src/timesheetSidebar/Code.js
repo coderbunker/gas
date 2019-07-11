@@ -30,7 +30,7 @@ function sendAll(datas) {
   jump();
   var Avals = sheet.getRange("A1:A").getValues();
   var Alast = Avals.filter(String).length;
-  var lastrow = sheet.getRange(Alast+1,1,1,9);
+  var lastrow = sheet.getRange(Alast+1, 1, 1, 9);
   var values = [[datas.enterDate, datas.enterStartTime, datas.enterEndTime, duration, total, datas.enterFullName, datas.enterCategory, datas.enterActivity, datas.enterLink]];
   lastrow.setValues(values);
   var timezone = "GMT+" + new Date().getTimezoneOffset()/60;
