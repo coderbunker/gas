@@ -23,6 +23,7 @@ function showProject() {
 
 // send user input to Google Spreadsheet
 function sendAll(datas) {
+  var success = false;
   var sheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getActiveSheet(); // ID for Timesheet
   var logSheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getSheetByName("Log");
   var duration = null;
@@ -36,10 +37,10 @@ function sendAll(datas) {
   var timezone = "GMT+" + new Date().getTimezoneOffset()/60;
   var date = Utilities.formatDate(new Date(), timezone, "yyyy-MM-dd HH:mm"); 
   logSheet.appendRow([date, "Data entered by " + datas.enterFullName]);
-  return 'success!';
+  return success = true;
 }
 
-// Jump to input line
+// jump to input line
 function jump() {
   var sheet = SpreadsheetApp.getActiveSheet();
   var values = sheet.getRange("A:A").getValues();
@@ -49,7 +50,7 @@ function jump() {
   sheet.setActiveRange(sheet.getRange(maxIndex + 2, 1));
 }
 
-// extract full name from members.json with active user email address
+// still working; extract full name from members.json with active user email address
 function matchName () {
   var emailaddress = Session.getActiveUser().getEmail();
   Logger.log(emailaddress);
@@ -62,4 +63,15 @@ function matchName () {
       return null;
     }
   }
+}
+
+// still working; jump to user's last entry
+function jumpToRecent (fullName, date) {
+  var sheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getActiveSheet(); // ID for Timesheet
+  for (var i = sheet.getMaxRows(); i>0; i--) {
+    if ((sheet.getRange(i,1) === date) && (sheet.getRange(i,6) === fullName)){
+      sheet.setActiveRange(sheet.getRange(i,1));
+    }
+   }
+   jump();
 }
