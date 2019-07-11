@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+
+  <h2>Coderbunker Timesheet</h2>
+
+  <br>
+  <style>
+input[type=text] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=text]:focus {
+    border-color:#333;
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+h2 {
+font-family:Titillium Web;
+}
+label {
+font-family:Titillium Web;
+}
+img {
+width:100px; 
+}
+</style>
+
+   <form onsubmit = "sendAll (event);">
+    <label for = "full name">Enter your full name:</label>
+    <div class="dropdown">
+    <select id="" name = "full name" onfocus = 'this.size=20;' onblur = 'this.size=1;' onchange = 'this.size = 3; this.blur();'>
+    <option value="">Full Name:</option>
+    <option value="Allen Guo">Allen Guo</option>
+    <option value="Alex Fielding">Alex Fielding</option>
+    <option value="Alex Miller">Alex Miller</option>
+    <option value="Anca Gabriela Munteanu Rotaru">Anca Gabriela Munteanu Rotaru</option>
+    <option value="Andie Chu">Andie Chu</option>
+    <option value="Andrea Suarez">Andrea Suarez</option>
+    <option value="Anita Xian">Anita Xian</option>
+    <option value="Anne-Sophie Meyer">Anne-Sophie Meyer</option>
+    <option value="Ann Hsu">Ann Hsu</option>
+    <option value="Armand Reitz">Armand Reitz</option>
+    <option value="Ashley Abraham">Ashley Abraham</option>
+    <option value="Brandon Nam">Brandon Nam</option>
+    <option value="Cesar Daniel Gozurreta">Cesar Daniel Gozurreta</option>
+    <option value="Charles Carrier">Charles Carrier</option>
+    <option value="Charles Umemoto">Charles Umemoto</option>
+    <option value="Christy Chen">Christy Chen</option>
+    <option value="Cooper Gu">Cooper Gu</option>
+    <option value="Dante Perea">Dante Perea</option>
+    <option value="David O'Connell">David O'Connell</option>
+    <option value="Frederic Bazin">Frederic Bazin</option>
+    <option value="Gregory Orton">Gregory Orton</option>
+    <option value= "Jessica Li">Jessica Li</option>
+    <option value="Jinyu Shao">Jinyu Shao</option>
+    <option value="Juheon (Joseph) Kang">Juheon (Joseph) Kang</option>
+    <option value="Karl Xu">Karl Xu</option>
+    <option value="Kate Dubinina">Kate Dubinina</option>
+    <option value="Liz Shi">Liz Shi</option>
+    <option value="Loïc Njamen">Loïc Njamen</option>
+    <option value="Maikha Abarca">Maikha Abarca</option>
+    <option value="Major A Sapp III">Major A Sapp III</option>
+    <option value="Mohamed Semega">Mohamed Semega</option>
+    <option value="Nicholas Yu">Nicholas Yu</option>
+    <option value="Nidal Zribi">Nidal Zribi</option>
+    <option value="Ofer Farjun">Ofer Farjun</option>
+    <option value="Philip Bruland">Philip Bruland</option>
+    <option value="Philip Weng">Philip Weng</option>
+    <option value="Renlei Huang">Renlei Huang</option>
+    <option value="Ricky Ng-Adam">Ricky Ng-Adam</option>
+    <option value="Shijie Lou">Shijie Lou</option>
+    <option value="Sunying Rong">Sunying Rong</option>
+    <option value="Teresa He">Teresa He</option>
+    <option value="Terry Kim">Terry Kim</option>
+    <option value="Tomas Jankauskas">Tomas Jankauskas</option>
+    <option value="Tony Sim">Tony Sim</option>
+    <option value="Wenlin Fang">Wenlin Fang</option>
+    var list = $('#list').find(":selected").text(); 
+    </select>
+    </div>
+    <br>
+    <label for = "work date">Enter your work date:</label>    
+    <input type="date" name="work date" align = "right">
+    <br>
+    <label for = "start time">Enter your start time:</label>
+    <input type = "time" name = "start time" align = "right"/>
+    <label for = "end time">Enter your end time: </label>
+    <input type = "time" name = "end time" />
+    <br>
+    <br>
+    <div class="dropdown">
+    <select id="" name = "project category" onfocus = 'this.size=10;' onblur = 'this.size=1;' onchange = 'this.size = 3; this.blur();'>
+    <option value="Account Management">Account Management</option>
+    <option value="Administrative">Administrative</option>
+    <option value="Automation">Automation</option>
+    <option value="Business Development">Business Development</option>
+    <option value="coderbunker.com">coderbunker.com</option>
+    <option value="Community Development">Community Development</option>
+    <option value="CSR Platforms">CSR Platform</option>
+    <option value="Finances">Finances</option>
+    <option value="Fundraising">Fund Raising</option>
+    <option value="Inquiries">Inquiries</option>
+    <option value="Matching">Matching</option>
+    <option value="Paid Mentoring">Paid Mentoring</option>
+    <option value="Project">Project</option>
+    <option value="Proposal & Pitch Material">Proposals & Pitch material</option>
+    <option value="Summer Camp">Summer Camp</option>
+    <option value="Systems Development">Systems Development</option>
+    <option value="Training & Mentoring">Training & Mentoring</option>
+    <option value="Tellurio">Tellurio</option>
+    var list = $('#list').find(":selected").text(); 
+    </select>
+    </div>
+    <br>
+    <label for = "project link">Enter the link for your work:</label><br>
+    <input type = "text" name = "project link" placeholder = "Insert project link"/><br>
+    <label for = "project activity">Describe your work:</label><br>
+    <input type = "text" name = "project activity" placeholder = "Insert project activity"/><br>
+    <br>
+    <div style="text-align:center">
+    <input align = "center" type = "submit" value = "Submit"/>
+    </div>
+</form>
+
+<div style="text-align:center;"><img src="https://assets.codebar.io/b//uploads/sponsor/avatar/477/600_451134127.jpeg" alt="coderbunker.png">
+</div>
+
+<script> function sendAll(e) {
+    e.preventDefault();
+    var datas = {
+        enterDate: e.target['work date'].value,   
+        enterStartTime: e.target['start time'].value,
+        enterEndTime: e.target['end time'].value,
+        enterFullName: e.target['full name'].value,
+        enterCategory: e.target['project category'].value,
+        enterActivity: e.target['project activity'].value,
+        enterLink: e.target['project link'].value
+    }
+    
+    google.script.run
+    .withSuccessHandler(function(response) {
+    console.log(response);
+    })
+    .sendAll(datas);
+  }
+</script>  
+
+  </body>
+</html>
