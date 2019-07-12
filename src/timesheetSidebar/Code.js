@@ -24,8 +24,8 @@ function showProject() {
 // send user input to Google Spreadsheet
 function sendAll(datas) {
   var success = false;
-  var sheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getActiveSheet(); // ID for Timesheet
-  var logSheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getSheetByName("Log");
+  var sheet = SpreadsheetApp.openById('1fHShi7L1ZLxKPYojl7gjMxFjiL6L4txAeZ7akf9vzd0').getActiveSheet(); // ID for Timesheet
+  var logSheet = SpreadsheetApp.openById('1fHShi7L1ZLxKPYojl7gjMxFjiL6L4txAeZ7akf9vzd0').getSheetByName("Log");
   var duration = null;
   var total = null;
   jump();
@@ -67,7 +67,7 @@ function matchName () {
 
 // still working; jump to user's last entry
 function jumpToRecent (fullName, date) {
-  var sheet = SpreadsheetApp.openById('1dRAXZRHMgfR_oX1ZF1RFeonUi7ZPk_wbRf7Jx0UvCjE').getActiveSheet(); // ID for Timesheet
+  var sheet = SpreadsheetApp.openById('1fHShi7L1ZLxKPYojl7gjMxFjiL6L4txAeZ7akf9vzd0').getActiveSheet(); // ID for Timesheet
   for (var i = sheet.getMaxRows(); i>0; i--) {
     if ((sheet.getRange(i,1) === date) && (sheet.getRange(i,6) === fullName)){
       sheet.setActiveRange(sheet.getRange(i,1));
