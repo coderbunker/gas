@@ -21,9 +21,7 @@ function timeSheetReport(clientName){
       var validity = thisRow[header.indexOf('Validity date')] ;
       var rate = thisRow[header.indexOf('Rate')];
       //FREELANCER INFO IN THE JSON FILE 
-      var freelancer = FreelancersInfo(name);
-      Logger.log('output from freelancer function');
-      Logger.log(freelancer);
+      var freelancer = FreelancersInfo(name)
       statuses[name]= freelancerStatus(freelancer, clientGoogleGroup, validity, rate)
     }
   };
@@ -161,8 +159,6 @@ function googleGroupReport(clientName){
         return e[0].toLowerCase()
       }
   );
-  //Logger.log('all google group Users :')
-  //Logger.log(clientGoogleGroupUsers)
   //RETRIEVE USERS INFO USING THE GROUP EMAILS
   var usersJsonInfo =clientGoogleGroupUsers.map(
       function (userEmail) {
@@ -172,8 +168,6 @@ function googleGroupReport(clientName){
         }
       }
   );
-  /* Logger.log('All the users info from the json')
-   Logger.log(usersJsonInfo)*/
   // ALL THE USERS NAMES AVAILABLE WITH VALID INFO
   var allValidUsers = usersJsonInfo.filter(
       function(object){
@@ -182,7 +176,7 @@ function googleGroupReport(clientName){
         }
       }
   );
-  Logger.log(allValidUsers)
+  
   //ALL THE VALID USERS NOT IN THE TIMESHEET
   var userNotInTheTimesheet = allValidUsers.filter(
     function(element){
@@ -199,11 +193,12 @@ function googleGroupReport(clientName){
   );
 
   if ( userNotInTheTimesheet.length >= 1){
+    var UserNotInSheetNames = userNotInTheTimesheet.map(function (e){ return e.fullname, e.email})
     GmailApp.sendEmail(['mohamed.semega@coderbunker.com'],
         clientName.clientName+'Timesheet Report',
         'TEST EMAIL'+
         '\nHello, '+
-        '\n I would like to report, the following: \n"'+userNotInTheTimesheet.fullname+' : '+ userNotInTheTimesheet.email+'"'+
+                       '\n I would like to report, the following: \n"'+UserNotInSheetNames+
         '\n Please, follow these recommendations, to solve the issue: '+
         '\n 1. Go to: '+clientName.timeSheetLink+
         '\n 2. Add the name(s) mentioned here to the timesheet'+
