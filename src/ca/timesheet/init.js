@@ -2,7 +2,7 @@ var cbCAFolderId;
 
 function init() {
   var scriptProps = PropertiesService.getScriptProperties();
-  scriptProps.setProperty('CODERBUNKER_CANADA_FOLDER_ID', '1-3yjiDmGXxS7COk2iAUpIWKnL6vK9S6v');
+  scriptProps.setProperty('CODERBUNKER_CANADA_FOLDER_ID', '');
 }
 
 
