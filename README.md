@@ -29,7 +29,7 @@ Need the following File > Project Properties > User Properties set:
 * ```TARGET_FOLDER_NAME```: Coderbunker Freelancers Profiles
 
 ## Configuration of timesheet (Google Spreadsheet)
-q
+
 * ```ORG_NAME```: Coderbunker
 * ```CHANGE_ENDPOINT```: onEdit events endpoint
 * ```SNAPSHOT_ENDPOINT```: full data snapshot data post endpoint
